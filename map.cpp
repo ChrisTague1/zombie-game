@@ -54,8 +54,10 @@ Map::~Map()
 int Map::move(Character &c, int dy, int dx)
 {
     characters[c.row][c.col] = NULL;
+    mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
     c.updatePos(dy, dx);
     characters[c.row][c.col] = &c;
+    mvaddch(c.row + 1, c.col + 1, c.getChar());
     c.increment(board[c.row][c.col]->getCost());
 
     return 0;

@@ -41,11 +41,11 @@ int main(int argc, char *argv[])
     nodelay(stdscr, 1);
     refresh();
     srand(time(NULL));
+    print_board();
 
     map.characters[pc.row][pc.col] = &pc;
 
     while (pc.on) {
-        print_board();
         kbhit();
 
         for (auto character: map.list) {
