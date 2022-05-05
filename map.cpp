@@ -31,6 +31,8 @@ Map::Map(PC &c): pc(c)
         characters[i][j] = new Zombie(i, j);
         list.push_back(characters[i][j]);
     }
+
+    list.push_back(&c);
 }
 
 Map::~Map()
@@ -80,6 +82,49 @@ int Map::accept(Zombie &z)
     if (!(rand() % 10)) {
         n = rand() % 4; // could be calling zombie.move(map) to allow for vistors
         validMove(z, dirs[n][0], dirs[n][1]) && move(z, dirs[n][0], dirs[n][1]);
+    }
+
+    return 0;
+}
+
+typedef enum direction {
+    up = 119,
+    down = 115,
+    left = 97,
+    right = 100
+} Direction;
+
+bool Map::user_input(PC &pc)
+{
+    int ch = getch();
+    flushinp();
+
+    switch (ch) {
+        case 113:
+            return false;
+        case up:
+            this->validMove(pc, dirs[0][0], dirs[0][1]) && this->move(pc, dirs[0][0], dirs[0][1]);
+            break;
+        case down:
+            this->validMove(pc, dirs[1][0], dirs[1][1]) && this->move(pc, dirs[1][0], dirs[1][1]);
+            break;
+        case left:
+            this->validMove(pc, dirs[2][0], dirs[2][1]) && this->move(pc, dirs[2][0], dirs[2][1]);
+            break;
+        case right:
+            this->validMove(pc, dirs[3][0], dirs[3][1]) && this->move(pc, dirs[3][0], dirs[3][1]);
+            break;
+        default:
+            break;
+    }
+
+    return true;
+}
+
+int Map::accept(PC &pc)
+{
+    if (kbhit()) {
+        pc.on = user_input(pc);
     }
 
     return 0;

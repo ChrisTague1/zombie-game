@@ -11,11 +11,13 @@ class Visitor {
 };
 
 class Zombie;
+class PC;
 
 class Acceptor {
     public:
         virtual int accept(Visitor &v) = 0;
         virtual int accept(Zombie &z) = 0;
+        virtual int accept(PC &pc) = 0;
         Acceptor() {}
         virtual ~Acceptor() {}
 };

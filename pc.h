@@ -11,4 +11,6 @@ class PC: public Character {
         int visit(Acceptor &a);
 };
 
+bool kbhit(void);
+
 #endif
