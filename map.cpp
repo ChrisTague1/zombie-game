@@ -1,6 +1,6 @@
 #include "map.h"
 #include <cstdlib>
-#include "character.h"
+#include "sprite.h"
 #include "zombie.h"
 #include "pc.h"
 #include <climits>
@@ -13,7 +13,7 @@ Map::Map(PC &c): pc(c)
 
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
-            characters[i][j] = NULL;
+            sprites[i][j] = NULL;
             if (rand() % 20 == 0) {
                 board[i][j] = new Building();
             } else {
@@ -28,8 +28,8 @@ Map::Map(PC &c): pc(c)
         i = rand() % height;
         j = rand() % width;
 
-        characters[i][j] = new Zombie(i, j);
-        list.push_back(characters[i][j]);
+        sprites[i][j] = new Zombie(i, j);
+        list.push_back(sprites[i][j]);
     }
 
     list.push_back(&c);
@@ -44,26 +44,26 @@ Map::~Map()
             if (board[i][j]) {
                 delete board[i][j];
             }
-            if (characters[i][j]) {
-                delete characters[i][j];
+            if (sprites[i][j]) {
+                delete sprites[i][j];
             }
         }
     }
 }
 
-int Map::move(Character &c, int dy, int dx)
+int Map::move(Sprite &c, int dy, int dx)
 {
-    characters[c.row][c.col] = NULL;
+    sprites[c.row][c.col] = NULL;
     mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
     c.updatePos(dy, dx);
-    characters[c.row][c.col] = &c;
+    sprites[c.row][c.col] = &c;
     mvaddch(c.row + 1, c.col + 1, c.getChar());
     c.increment(board[c.row][c.col]->getCost());
 
     return 0;
 }
 
-bool Map::validMove(Character &c, int dy, int dx)
+bool Map::validMove(Sprite &c, int dy, int dx)
 {
     return (
         c.row + dy >= 0 &&

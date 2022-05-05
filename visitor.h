@@ -1,16 +1,18 @@
 #ifndef visitor_H
 #define visitor_H
 
+#include "move.h"
+
 class Acceptor;
 
-class Visitor {
+class Visitor: public Move {
     public:
         virtual int visit(Acceptor &a) = 0;
         Visitor() {}
         virtual ~Visitor() {}
 };
 
-class Zombie;
+class Zombie; // all things that implement visitor (can be accepted by map)
 class PC;
 
 class Acceptor {

@@ -19,8 +19,8 @@ void print_board(void)
 
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
-            if (map.characters[i][j]) {
-                mvaddch(i + 1, j + 1, map.characters[i][j]->getChar());
+            if (map.sprites[i][j]) {
+                mvaddch(i + 1, j + 1, map.sprites[i][j]->getChar());
             } else if (map.board[i][j]) {
                 mvaddch(i + 1, j + 1, map.board[i][j]->getChar());
             }
@@ -32,6 +32,8 @@ void print_board(void)
 
 int main(int argc, char *argv[])
 {
+    map.sprites[pc.row][pc.col] = &pc;
+
     initscr();
     resizeterm(height + 2, width + 2);
     raw();
@@ -42,8 +44,6 @@ int main(int argc, char *argv[])
     refresh();
     srand(time(NULL));
     print_board();
-
-    map.characters[pc.row][pc.col] = &pc;
 
     while (pc.on) {
         kbhit();
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
         usleep(frame_rate);
     }
 
-    map.characters[pc.row][pc.col] = NULL;
+    map.sprites[pc.row][pc.col] = NULL;
 
     endwin();
     return 0;

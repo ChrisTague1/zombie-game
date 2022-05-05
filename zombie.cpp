@@ -1,7 +1,7 @@
 #include "zombie.h"
 #include <cstdlib>
 
-Zombie::Zombie(int r, int c): Character('Z', r, c)
+Zombie::Zombie(int r, int c): Sprite('Z', r, c)
 {}
 
 Zombie::~Zombie()

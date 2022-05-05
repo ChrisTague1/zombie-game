@@ -1,11 +1,11 @@
-#ifndef character_H
-#define character_H
+#ifndef sprite_H
+#define sprite_H
 
 #include "cell.h"
 #include "move.h"
 #include "visitor.h"
 
-class Character: public Move, public Cell, public Visitor {
+class Sprite: public Cell, public Visitor {
     private:
         char c;
     public:
@@ -13,8 +13,8 @@ class Character: public Move, public Cell, public Visitor {
         int col;
         char getChar();
         void updatePos(int dy, int dx);
-        Character(char ch, int r, int c);
-        ~Character();
+        Sprite(char ch, int r, int c);
+        ~Sprite();
 };
 
 const int dirs[4][2] = {

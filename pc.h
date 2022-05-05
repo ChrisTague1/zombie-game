@@ -1,9 +1,9 @@
 #ifndef pc_H
 #define pc_H
 
-#include "character.h"
+#include "sprite.h"
 
-class PC: public Character {
+class PC: public Sprite {
     public:
         bool on;
         PC(int r, int c);
