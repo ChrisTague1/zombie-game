@@ -1,7 +1,7 @@
 #include "pc.h"
 #include <ncurses.h>
 
-PC::PC(int r, int c): Character('@', r, c)
+PC::PC(int r, int c): Sprite('@', r, c)
 {
     on = true;
 }
