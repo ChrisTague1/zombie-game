@@ -10,6 +10,8 @@
 #include "zombie.h"
 
 class Map: public Acceptor {
+    private:
+        bool user_input(PC &pc);
     public:
         Terrain *board[height][width];
         Character *characters[height][width];
@@ -21,6 +23,7 @@ class Map: public Acceptor {
         ~Map();
         int accept(Visitor &v);
         int accept(Zombie &z);
+        int accept(PC &pc);
 };
 
 #endif
