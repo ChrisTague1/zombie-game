@@ -7,8 +7,40 @@
 #include <ncurses.h>
 #include <unistd.h>
 
-Map::Map(PC &c): pc(c)
+int Map::remove_from_list(Visitor *v) // never give it a null node, it doesn't check for that
 {
+    if (v == list) {
+        list = v->next;
+    } else if (v == list_tail) {
+        list_tail = v->prev;
+    } else {
+        v->prev->next = v->next;
+        v->next->prev = v->prev;
+    }
+
+    return 0;
+}
+
+int Map::add_to_list(Visitor *v) // never give it a null node, it doesn't check for that
+{
+    if (!list) {
+        list = v;
+        list_tail = v;
+    } else {
+        list_tail->next = v;
+        v->prev = list_tail;
+        list_tail = v;
+    }
+
+    return 0;
+}
+
+Map::Map(PC *c)
+{
+    list = NULL;
+    list_tail = NULL;
+    pc = c;
+
     int i, j, z;
 
     for (i = 0; i < height; i++) {
@@ -22,17 +54,17 @@ Map::Map(PC &c): pc(c)
         }
     }
 
-    z = 1 + rand() % 3;
+    z = 10 + rand() % 30;
 
     while (z--) {
         i = rand() % height;
         j = rand() % width;
 
         sprites[i][j] = new Zombie(i, j);
-        list.push_back(sprites[i][j]);
+        add_to_list(sprites[i][j]);
     }
 
-    list.push_back(&c);
+    add_to_list(pc);
 }
 
 Map::~Map()
@@ -44,10 +76,12 @@ Map::~Map()
             if (board[i][j]) {
                 delete board[i][j];
             }
-            if (sprites[i][j]) {
-                delete sprites[i][j];
-            }
         }
+    }
+
+    while ((list_tail = list->next)) {
+        delete list;
+        list = list_tail;
     }
 }
 
@@ -79,6 +113,14 @@ int Map::accept(Visitor &v) { return 0; }
 
 int Map::accept(Zombie &z)
 {
+    if (rand() % 20 == 0) {
+        sprites[z.row][z.col] = NULL;
+        mvaddch(z.row + 1, z.col + 1, board[z.row][z.col]->getChar());
+        remove_from_list(&z);
+        delete &z;
+        return -1;
+    }
+
     int n;
 
     if (!(rand() % 10)) {
