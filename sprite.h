@@ -16,6 +16,13 @@ class Sprite: public Cell, public Move {
         ~Sprite();
 };
 
+typedef enum direction {
+    up,
+    down,
+    left,
+    right
+} Direction;
+
 const int dirs[4][2] = {
     {-1, 0},
     {1, 0},
