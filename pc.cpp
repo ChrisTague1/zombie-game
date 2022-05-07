@@ -43,16 +43,16 @@ bool PC::user_input(Map &map)
         case 113:
             return false;
         case 119:
-            map.validMove(*this, dirs[up][0], dirs[up][1]) && map.move(*this, dirs[up][0], dirs[up][1]);
+            move(dirs[up][0], dirs[up][1], map);
             break;
         case 115:
-            map.validMove(*this, dirs[down][0], dirs[down][1]) && map.move(*this, dirs[down][0], dirs[down][1]);
+            move(dirs[down][0], dirs[down][1], map);
             break;
         case 97:
-            map.validMove(*this, dirs[left][0], dirs[left][1]) && map.move(*this, dirs[left][0], dirs[left][1]);
+            move(dirs[left][0], dirs[left][1], map);
             break;
         case 100:
-            map.validMove(*this, dirs[right][0], dirs[right][1]) && map.move(*this, dirs[right][0], dirs[right][1]);
+            move(dirs[right][0], dirs[right][1], map);
             break;
         case 106: // shoot left
             map.add_to_list(Projectile::getProjectile(row, col - 1, left));
@@ -71,6 +71,14 @@ bool PC::user_input(Map &map)
     }
 
     return true;
+}
+
+void PC::move(int dy, int dx, Map &map)
+{
+    if (map.validMove(*this, dy, dx)) {
+        map.move(*this, dy, dx);
+        map.generate_path(map.bz_path);
+    }
 }
 
 Move *PC::action(Map &map)

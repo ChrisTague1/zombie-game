@@ -10,9 +10,7 @@
 #define frame_rate 31250
 // 31250
 
-Map map;
-
-void print_board(void)
+void print_board(Map &map)
 {
     int i, j;
 
@@ -40,7 +38,8 @@ int main(int argc, char *argv[])
     nodelay(stdscr, 1);
     refresh();
     srand(time(NULL));
-    print_board();
+    Map map;
+    print_board(map);
 
     Move *current = NULL;
     Move *next = NULL;
@@ -64,5 +63,7 @@ int main(int argc, char *argv[])
     }
 
     endwin();
+
+    // printPath(map.bz_path);
     return 0;
 }

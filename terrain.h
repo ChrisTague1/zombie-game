@@ -5,12 +5,12 @@
 
 class Terrain: public Cell {
     private:
-        char cost;
+        int cost;
     public:
-        char getCost();
+        int getCost();
         virtual ~Terrain() {}
     protected:
-        Terrain(char cost);
+        Terrain(int cost);
 };
 
 class Building: public Terrain {

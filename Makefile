@@ -9,7 +9,7 @@ CXXFLAGS = -Wall -Werror -ggdb -funroll-loops
 LDFLAGS = -lm -lncurses
 
 BIN = zombie
-OBJS = main.o sprite.o move.o terrain.o pc.o zombie.o map.o projectile.o
+OBJS = main.o sprite.o move.o terrain.o pc.o zombie.o map.o projectile.o heap.o
 
 all: $(BIN)
 

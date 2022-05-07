@@ -3,17 +3,17 @@
 
 #define GRASS_COST 5
 
-Terrain::Terrain(char cost)
+Terrain::Terrain(int cost)
 {
     this->cost = cost;
 }
 
-char Terrain::getCost()
+int Terrain::getCost()
 {
     return cost;
 }
 
-Building::Building(): Terrain(CHAR_MAX)
+Building::Building(): Terrain(INT_MAX)
 {}
 
 char Building::getChar()

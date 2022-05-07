@@ -8,11 +8,26 @@
 #include "zombie.h"
 #include "move.h"
 #include "projectile.h"
+#include "heap.h"
+
+typedef struct point {
+	int row;
+	int col;
+} point_t;
+
+typedef struct path {
+	heap_node_t *hn;
+	point_t pos;
+	point_t to;
+	int cost;
+} path_t;
 
 class Map {
     private:
         bool user_input(PC &pc);
         Move *list_tail;
+        void generate_path(path_t path[height][width]);
+        friend class PC;
     public:
         Terrain *board[height][width];
         Sprite *sprites[height][width];
@@ -20,12 +35,16 @@ class Map {
         int add_to_list(Move *v);
         int remove_from_list(Move *v);
         int move(Sprite &c, int dy, int dx);
+        int moveTo(Sprite &c, int y, int x);
         int move(Projectile &c, int dy, int dx);
         bool validMove(Sprite &c, int dy, int dx);
         PC *pc;
         Move *destroy(Sprite *s);
+        path_t bz_path[height][width];
         Map();
         ~Map();
 };
+
+void printPath(path_t path[height][width]);
 
 #endif
