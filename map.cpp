@@ -6,6 +6,7 @@
 #include <climits>
 #include <ncurses.h>
 #include <unistd.h>
+#include "size.h"
 
 int Map::remove_from_list(Move *v) // never give it a null node, it doesn't check for that
 {
@@ -37,11 +38,10 @@ int Map::add_to_list(Move *v) // never give it a null node, it doesn't check for
     return 0;
 }
 
-Map::Map(PC *c)
+Map::Map()
 {
     list = NULL;
     list_tail = NULL;
-    pc = c;
 
     int i, j, z;
 
@@ -65,6 +65,9 @@ Map::Map(PC *c)
         sprites[i][j] = Zombie::getZombie(i, j);
         add_to_list(sprites[i][j]);
     }
+
+    pc = PC::getPC(height / 2, width / 2);
+    sprites[pc->row][pc->col] = pc;
 
     add_to_list(pc);
 }

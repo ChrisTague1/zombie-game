@@ -10,8 +10,7 @@
 #define frame_rate 31250
 // 31250
 
-PC *pc = new PC(height / 2, width / 2);
-Map map(pc);
+Map map;
 
 void print_board(void)
 {
@@ -32,8 +31,6 @@ void print_board(void)
 
 int main(int argc, char *argv[])
 {
-    map.sprites[pc->row][pc->col] = pc;
-
     initscr();
     resizeterm(height + 2, width + 2);
     raw();
@@ -48,7 +45,7 @@ int main(int argc, char *argv[])
     Move *current = NULL;
     Move *next = NULL;
 
-    while (pc->on) {
+    while (map.pc->on) {
         kbhit();
         current = map.list;
 

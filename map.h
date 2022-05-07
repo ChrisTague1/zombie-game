@@ -24,7 +24,7 @@ class Map {
         bool validMove(Sprite &c, int dy, int dx);
         PC *pc;
         Move *destroy(Sprite *s);
-        Map(PC *c);
+        Map();
         ~Map();
 };
 

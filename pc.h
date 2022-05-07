@@ -6,9 +6,10 @@
 class PC: public Sprite {
     private:
         bool user_input(Map &map);
-    public:
-        bool on;
         PC(int r, int c);
+    public:
+        static PC *getPC(int r, int c);
+        bool on;
         ~PC();
         Move *action(Map &m);
 };

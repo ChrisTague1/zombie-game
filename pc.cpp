@@ -11,6 +11,17 @@ PC::PC(int r, int c): Sprite('@', r, c)
 PC::~PC()
 {}
 
+PC *PC::getPC(int r, int c)
+{
+    static PC *pc;
+
+    if (!pc) {
+        pc = new PC(r, c);
+    }
+
+    return pc;
+}
+
 bool kbhit(void)
 {
     int ch = getch();
