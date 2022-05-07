@@ -53,12 +53,11 @@ int main(int argc, char *argv[])
         current = map.list;
 
         while (current) {
-            next = current->next;
-
             if (current->aboveZero()) {
                 current->decrement();
+                current = current->next;
             } else {
-                current->action(map);
+                next = current->action(map);
             }
 
             current = next;

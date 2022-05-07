@@ -62,11 +62,11 @@ bool PC::user_input(Map &map)
     return true;
 }
 
-int PC::action(Map &map)
+Move *PC::action(Map &map)
 {
     if (kbhit()) {
         on = user_input(map);
     }
 
-    return 0;
+    return next;
 }

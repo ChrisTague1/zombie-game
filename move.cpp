@@ -14,4 +14,6 @@ void Move::increment(char i) {
 
 Move::Move() {
     movement = 0;
+    next = 0;
+    prev = 0;
 }

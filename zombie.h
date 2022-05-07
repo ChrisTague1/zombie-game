@@ -9,7 +9,7 @@ class Zombie: public Sprite {
     public:
         static Zombie *getZombie(int r, int c);
         ~Zombie();
-        int action(Map &m);
+        Move *action(Map &m);
 };
 
 #endif

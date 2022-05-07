@@ -125,11 +125,12 @@ bool Map::validMove(Sprite &c, int dy, int dx)
     );
 }
 
-int Map::destroy(Sprite *s)
+Move *Map::destroy(Sprite *s)
 {
+        Move *returning = s->next;
         sprites[s->row][s->col] = NULL;
         mvaddch(s->row + 1, s->col + 1, board[s->row][s->col]->getChar());
         remove_from_list(s);
         delete s;
-        return 0;
+        return returning;
 }

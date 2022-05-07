@@ -14,7 +14,7 @@ Projectile *Projectile::getProjectile(int r, int c, Direction d)
     return new Projectile(r, c, d);
 }
 
-int Projectile::action(Map &m)
+Move *Projectile::action(Map &m)
 {
     /**
      * Currently, this is buggy
@@ -30,5 +30,5 @@ int Projectile::action(Map &m)
         return m.destroy(this);
     }
 
-    return 0;
+    return next;
 }

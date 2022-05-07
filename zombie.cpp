@@ -14,7 +14,7 @@ Zombie *Zombie::getZombie(int r, int c)
     return new Zombie(r, c);
 }
 
-int Zombie::action(Map &map)
+Move *Zombie::action(Map &map)
 {
 
     if (rand() % 100 == 0) {
@@ -28,5 +28,5 @@ int Zombie::action(Map &map)
         map.validMove(*this, dirs[n][0], dirs[n][1]) && map.move(*this, dirs[n][0], dirs[n][1]);
     }
 
-    return 0;
+    return next;
 }
