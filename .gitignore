@@ -1,5 +1,5 @@
 *.d
 *.o
 zombie
-output
+.valgrind.txt
 .vscode
