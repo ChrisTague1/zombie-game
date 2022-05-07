@@ -16,14 +16,9 @@ Zombie *Zombie::getZombie(int r, int c)
 
 Move *Zombie::action(Map &map)
 {
-
-    if (rand() % 100 == 0) {
-        return map.destroy(this);
-    }
-
     int n;
 
-    if (!(rand() % 5)) {
+    if (!(rand() % 7)) {
         n = rand() % 4; // could be calling zombie.move(map) to allow for vistors
         map.validMove(*this, dirs[n][0], dirs[n][1]) && map.move(*this, dirs[n][0], dirs[n][1]);
     }
