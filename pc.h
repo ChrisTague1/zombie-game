@@ -10,7 +10,7 @@ class PC: public Sprite {
         bool on;
         PC(int r, int c);
         ~PC();
-        int action(Map &m);
+        Move *action(Map &m);
 };
 
 bool kbhit(void);

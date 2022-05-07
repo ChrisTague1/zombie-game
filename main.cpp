@@ -27,7 +27,7 @@ void print_board(void)
         }
     }
 
-    // box(stdscr, 0, 0);
+    box(stdscr, 0, 0);
 }
 
 int main(int argc, char *argv[])
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     map.sprites[pc->row][pc->col] = pc;
 
     initscr();
-    // resizeterm(height + 2, width + 2);
+    resizeterm(height + 2, width + 2);
     raw();
     noecho();
     curs_set(0);
@@ -53,12 +53,11 @@ int main(int argc, char *argv[])
         current = map.list;
 
         while (current) {
-            next = current->next;
-
             if (current->aboveZero()) {
                 current->decrement();
+                current = current->next;
             } else {
-                current->action(map);
+                next = current->action(map);
             }
 
             current = next;

@@ -11,7 +11,7 @@ class Move {
         virtual ~Move() {}
         Move *prev;
         Move *next;
-        virtual int action(Map &m) = 0;
+        virtual Move *action(Map &m) = 0;
     protected:
         Move();
         char movement;
