@@ -9,12 +9,6 @@ Zombie::Zombie(int r, int c): Sprite('Z', r, c)
 Zombie::~Zombie()
 {}
 
-int Zombie::visit(Acceptor &a)
-{
-    a.accept(*this);
-    return 0;
-}
-
 int Zombie::action(Map &map)
 {
 

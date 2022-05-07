@@ -10,12 +10,6 @@ PC::PC(int r, int c): Sprite('@', r, c)
 PC::~PC()
 {}
 
-int PC::visit(Acceptor &a)
-{
-    a.accept(*this);
-    return 0;
-}
-
 bool kbhit(void)
 {
     int ch = getch();

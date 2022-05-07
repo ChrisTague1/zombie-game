@@ -10,7 +10,6 @@ class PC: public Sprite {
         bool on;
         PC(int r, int c);
         ~PC();
-        int visit(Acceptor &a);
         int action(Map &m);
 };
 

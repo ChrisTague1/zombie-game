@@ -3,9 +3,8 @@
 
 #include "cell.h"
 #include "move.h"
-#include "visitor.h"
 
-class Sprite: public Cell, public Visitor {
+class Sprite: public Cell, public Move {
     private:
         char c;
     public:
