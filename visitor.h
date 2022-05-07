@@ -2,14 +2,20 @@
 #define visitor_H
 
 #include "move.h"
+#include <cstdlib>
 
 class Acceptor;
 
 class Visitor: public Move {
     public:
         virtual int visit(Acceptor &a) = 0;
-        Visitor() {}
+        Visitor() {
+            next = NULL;
+            prev = NULL;
+        }
         virtual ~Visitor() {}
+        Visitor *next;
+        Visitor *prev;
 };
 
 class Zombie; // all things that implement visitor (can be accepted by map)

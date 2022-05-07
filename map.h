@@ -13,14 +13,17 @@
 class Map: public Acceptor {
     private:
         bool user_input(PC &pc);
+        Visitor *list_tail;
     public:
         Terrain *board[height][width];
         Sprite *sprites[height][width];
-        std::vector<Visitor*> list;
+        Visitor *list;
+        int add_to_list(Visitor *v);
+        int remove_from_list(Visitor *v);
         int move(Sprite &c, int dy, int dx);
         bool validMove(Sprite &c, int dy, int dx);
-        PC &pc;
-        Map(PC &c);
+        PC *pc;
+        Map(PC *c);
         ~Map();
         int accept(Visitor &v);
         int accept(Zombie &z);
