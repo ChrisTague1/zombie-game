@@ -3,7 +3,7 @@
 #include "ncurses.h"
 #include <cstdlib>
 
-Projectile::Projectile(int r, int c, Direction d): Sprite('+', r, c), speed(1), range(25), distance(0), dir(d)
+Projectile::Projectile(int r, int c, Direction d): Sprite('+', r, c), speed(1), range(15), distance(0), dir(d)
 {}
 
 Projectile::~Projectile()
@@ -23,9 +23,7 @@ Move *Projectile::action(Map &m)
             m.destroy(target);
             return m.destroy(this);
         }
-        increment(speed);
-        distance++;
-        m.moveProj(*this, dirs[dir][0], dirs[dir][1]);
+        m.move(*this, dirs[dir][0], dirs[dir][1]);
     } else {
         return m.destroy(this);
     }

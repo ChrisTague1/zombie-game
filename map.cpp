@@ -29,9 +29,6 @@ int Map::add_to_list(Move *v) // never give it a null node, it doesn't check for
         list = v;
         list_tail = v;
     } else {
-        // list_tail->next = v;
-        // v->prev = list_tail; // for some reason when I add to the end, I get a seg fault. Maybe investigate this later
-        // list_tail = v;
         v->next = list;
         list->prev = v;
         list = v;
@@ -51,11 +48,11 @@ Map::Map(PC *c)
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
             sprites[i][j] = NULL;
-            // if (rand() % 20 == 0) {
-                // board[i][j] = new Building();
-            // } else {
+            if (rand() % 20 == 0) {
+                board[i][j] = new Building();
+            } else {
                 board[i][j] = new Grass();
-            // }
+            }
         }
     }
 
@@ -102,13 +99,15 @@ int Map::move(Sprite &c, int dy, int dx)
     return 0;
 }
 
-int Map::moveProj(Sprite &c, int dy, int dx)
+int Map::move(Projectile &c, int dy, int dx)
 {
     sprites[c.row][c.col] = NULL;
     mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
     c.updatePos(dy, dx);
     sprites[c.row][c.col] = &c;
     mvaddch(c.row + 1, c.col + 1, c.getChar());
+    c.increment(c.getSpeed());
+    c.upDistance();
 
     return 0;
 }

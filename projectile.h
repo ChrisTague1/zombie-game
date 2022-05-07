@@ -8,6 +8,8 @@ class Projectile: public Sprite {
         static Projectile *getProjectile(int r, int c, Direction d);
         ~Projectile();
         Move *action(Map &m);
+        int getSpeed() { return speed; }
+        void upDistance() { distance++; }
     private:
         Projectile(int r, int c, Direction d);
         int speed;
