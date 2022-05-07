@@ -14,3 +14,6 @@ Once you have the **PID**, run `gdb PROGRAM PID`, where program is the program n
 **Note:** you have have to use `sudo gdb PROGRAM PID`.
 
 Use `c` to continue the execution of the program. Google GDB for how to use GDB.
+
+## Bugs
+- It is pretty common for zombies to be invisible due to how they are rendered. To avoid printing the board on every frame, you could print the cell you are going to and the cell you are leaving. Another option would be to bar you from entering the same cell as something else.
