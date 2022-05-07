@@ -4,11 +4,13 @@
 #include "sprite.h"
 
 class PC: public Sprite {
+    private:
+        bool user_input(Map &map);
     public:
         bool on;
         PC(int r, int c);
         ~PC();
-        int visit(Acceptor &a);
+        int action(Map &m);
 };
 
 bool kbhit(void);

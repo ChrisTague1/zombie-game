@@ -7,7 +7,7 @@
 #include <ncurses.h>
 #include <unistd.h>
 
-int Map::remove_from_list(Visitor *v) // never give it a null node, it doesn't check for that
+int Map::remove_from_list(Move *v) // never give it a null node, it doesn't check for that
 {
     if (v == list) {
         list = v->next;
@@ -21,7 +21,7 @@ int Map::remove_from_list(Visitor *v) // never give it a null node, it doesn't c
     return 0;
 }
 
-int Map::add_to_list(Visitor *v) // never give it a null node, it doesn't check for that
+int Map::add_to_list(Move *v) // never give it a null node, it doesn't check for that
 {
     if (!list) {
         list = v;
@@ -107,69 +107,4 @@ bool Map::validMove(Sprite &c, int dy, int dx)
         !c.aboveZero() &&
         board[c.row + dy][c.col + dx]->getCost() != CHAR_MAX
     );
-}
-
-int Map::accept(Visitor &v) { return 0; }
-
-int Map::accept(Zombie &z)
-{
-    if (rand() % 20 == 0) {
-        sprites[z.row][z.col] = NULL;
-        mvaddch(z.row + 1, z.col + 1, board[z.row][z.col]->getChar());
-        remove_from_list(&z);
-        delete &z;
-        return -1;
-    }
-
-    int n;
-
-    if (!(rand() % 10)) {
-        n = rand() % 4; // could be calling zombie.move(map) to allow for vistors
-        validMove(z, dirs[n][0], dirs[n][1]) && move(z, dirs[n][0], dirs[n][1]);
-    }
-
-    return 0;
-}
-
-typedef enum direction {
-    up = 119,
-    down = 115,
-    left = 97,
-    right = 100
-} Direction;
-
-bool Map::user_input(PC &pc)
-{
-    int ch = getch();
-    flushinp();
-
-    switch (ch) {
-        case 113:
-            return false;
-        case up:
-            this->validMove(pc, dirs[0][0], dirs[0][1]) && this->move(pc, dirs[0][0], dirs[0][1]);
-            break;
-        case down:
-            this->validMove(pc, dirs[1][0], dirs[1][1]) && this->move(pc, dirs[1][0], dirs[1][1]);
-            break;
-        case left:
-            this->validMove(pc, dirs[2][0], dirs[2][1]) && this->move(pc, dirs[2][0], dirs[2][1]);
-            break;
-        case right:
-            this->validMove(pc, dirs[3][0], dirs[3][1]) && this->move(pc, dirs[3][0], dirs[3][1]);
-            break;
-        default:
-            break;
-    }
-
-    return true;
-}
-
-int Map::accept(PC &pc)
-{
-    if (kbhit()) {
-        pc.on = user_input(pc);
-    }
-
-    return 0;
 }

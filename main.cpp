@@ -6,7 +6,6 @@
 #include "size.h"
 #include "pc.h"
 #include "map.h"
-#include "visitor.h"
 
 #define frame_rate 31250
 // 31250
@@ -46,7 +45,7 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     print_board();
 
-    Visitor *current = NULL;
+    Move *current = NULL;
 
     while (pc->on) {
         kbhit();
@@ -56,7 +55,7 @@ int main(int argc, char *argv[])
             if (current->aboveZero()) {
                 current->decrement();
             } else {
-                current->visit(map);
+                current->action(map);
             }
 
             current = current->next;
