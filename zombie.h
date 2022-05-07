@@ -9,6 +9,7 @@ class Zombie: public Sprite {
         Zombie(int r, int c);
         ~Zombie();
         int visit(Acceptor &a);
+        int action(Map &m);
 };
 
 #endif

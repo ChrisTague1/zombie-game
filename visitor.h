@@ -5,10 +5,12 @@
 #include <cstdlib>
 
 class Acceptor;
+class Map;
 
 class Visitor: public Move {
     public:
         virtual int visit(Acceptor &a) = 0;
+        virtual int action(Map &m) = 0;
         Visitor() {
             next = NULL;
             prev = NULL;

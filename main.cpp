@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
             if (current->aboveZero()) {
                 current->decrement();
             } else {
-                current->visit(map);
+                current->action(map);
             }
 
             current = current->next;
