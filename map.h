@@ -19,6 +19,7 @@ class Map {
         int add_to_list(Move *v);
         int remove_from_list(Move *v);
         int move(Sprite &c, int dy, int dx);
+        int moveProj(Sprite &c, int dy, int dx);
         bool validMove(Sprite &c, int dy, int dx);
         PC *pc;
         Map(PC *c);

@@ -11,8 +11,10 @@ int Map::remove_from_list(Move *v) // never give it a null node, it doesn't chec
 {
     if (v == list) {
         list = v->next;
+        list->prev = NULL;
     } else if (v == list_tail) {
         list_tail = v->prev;
+        list_tail->next = NULL;
     } else {
         v->prev->next = v->next;
         v->next->prev = v->prev;
@@ -27,9 +29,12 @@ int Map::add_to_list(Move *v) // never give it a null node, it doesn't check for
         list = v;
         list_tail = v;
     } else {
-        list_tail->next = v;
-        v->prev = list_tail;
-        list_tail = v;
+        // list_tail->next = v;
+        // v->prev = list_tail; // for some reason when I add to the end, I get a seg fault. Maybe investigate this later
+        // list_tail = v;
+        v->next = list;
+        list->prev = v;
+        list = v;
     }
 
     return 0;
@@ -93,6 +98,17 @@ int Map::move(Sprite &c, int dy, int dx)
     sprites[c.row][c.col] = &c;
     mvaddch(c.row + 1, c.col + 1, c.getChar());
     c.increment(board[c.row][c.col]->getCost());
+
+    return 0;
+}
+
+int Map::moveProj(Sprite &c, int dy, int dx)
+{
+    sprites[c.row][c.col] = NULL;
+    mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
+    c.updatePos(dy, dx);
+    sprites[c.row][c.col] = &c;
+    mvaddch(c.row + 1, c.col + 1, c.getChar());
 
     return 0;
 }
