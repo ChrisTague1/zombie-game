@@ -9,6 +9,11 @@ Zombie::Zombie(int r, int c): Sprite('Z', r, c)
 Zombie::~Zombie()
 {}
 
+Zombie *Zombie::getZombie(int r, int c)
+{
+    return new Zombie(r, c);
+}
+
 int Zombie::action(Map &map)
 {
 

@@ -60,7 +60,7 @@ Map::Map(PC *c)
         i = rand() % height;
         j = rand() % width;
 
-        sprites[i][j] = new Zombie(i, j);
+        sprites[i][j] = Zombie::getZombie(i, j);
         add_to_list(sprites[i][j]);
     }
 
