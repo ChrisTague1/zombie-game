@@ -27,11 +27,7 @@ int Projectile::action(Map &m)
         distance++;
         m.moveProj(*this, dirs[dir][0], dirs[dir][1]);
     } else {
-        m.sprites[row][col] = NULL;
-        mvaddch(row + 1, col + 1, m.board[row][col]->getChar());
-        m.remove_from_list(this);
-        delete this; // make constructor private for all things that can delete themselves
-        return -1;
+        return m.destroy(this);
     }
 
     return 0;

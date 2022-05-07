@@ -51,11 +51,11 @@ Map::Map(PC *c)
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
             sprites[i][j] = NULL;
-            if (rand() % 20 == 0) {
-                board[i][j] = new Building();
-            } else {
+            // if (rand() % 20 == 0) {
+                // board[i][j] = new Building();
+            // } else {
                 board[i][j] = new Grass();
-            }
+            // }
         }
     }
 
@@ -123,4 +123,13 @@ bool Map::validMove(Sprite &c, int dy, int dx)
         !c.aboveZero() &&
         board[c.row + dy][c.col + dx]->getCost() != CHAR_MAX
     );
+}
+
+int Map::destroy(Sprite *s)
+{
+        sprites[s->row][s->col] = NULL;
+        mvaddch(s->row + 1, s->col + 1, board[s->row][s->col]->getChar());
+        remove_from_list(s);
+        delete s;
+        return 0;
 }

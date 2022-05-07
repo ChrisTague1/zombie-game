@@ -26,5 +26,5 @@ Grass::Grass(): Terrain(GRASS_COST)
 
 char Grass::getChar()
 {
-    return ',';
+    return ' ';
 }

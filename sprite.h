@@ -13,7 +13,7 @@ class Sprite: public Cell, public Move {
         char getChar();
         void updatePos(int dy, int dx);
         Sprite(char ch, int r, int c);
-        ~Sprite();
+        virtual ~Sprite() {}
 };
 
 typedef enum direction {

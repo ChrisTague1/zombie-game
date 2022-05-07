@@ -13,6 +13,3 @@ void Sprite::updatePos(int dy, int dx)
 
 Sprite::Sprite(char ch, int r, int c): c(ch), row(r), col(c)
 {}
-
-Sprite::~Sprite()
-{}
