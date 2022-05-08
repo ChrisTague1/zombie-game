@@ -2,9 +2,6 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <ctime>
-#include <climits>
-#include "size.h"
-#include "pc.h"
 #include "map.h"
 
 #define frame_rate 31250
@@ -52,11 +49,9 @@ int main(int argc, char *argv[])
     refresh();
     int seed;
     seed = time(NULL);
-    // seed = 1651954934;
     srand(seed);
     Map map;
     print_board(map);
-    // mvprintw(0, 0, "%d", seed);
 
     Move *current = NULL;
     Move *next = NULL;
