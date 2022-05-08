@@ -18,7 +18,6 @@ typedef struct point {
 typedef struct path {
 	heap_node_t *hn;
 	point_t pos;
-	point_t to;
 	int cost;
 } path_t;
 
@@ -35,7 +34,7 @@ class Map {
         int add_to_list(Move *v);
         int remove_from_list(Move *v);
         int move(Sprite &c, int dy, int dx);
-        int moveTo(Sprite &c, int y, int x);
+        int followPath(Sprite &c, path_t path[height][width]);
         int move(Projectile &c, int dy, int dx);
         bool validMove(Sprite &c, int dy, int dx);
         PC *pc;
@@ -44,7 +43,5 @@ class Map {
         Map();
         ~Map();
 };
-
-void printPath(path_t path[height][width]);
 
 #endif
