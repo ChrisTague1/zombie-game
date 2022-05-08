@@ -9,7 +9,7 @@
 #include "size.h"
 #include <cstdio>
 
-int Map::remove_from_list(Move *v) // never give it a null node, it doesn't check for that
+int Map::remove_from_list(Move *v)
 {
     if (v == list) {
         list = v->next;
@@ -25,7 +25,7 @@ int Map::remove_from_list(Move *v) // never give it a null node, it doesn't chec
     return 0;
 }
 
-int Map::add_to_list(Move *v) // never give it a null node, it doesn't check for that
+int Map::add_to_list(Move *v)
 {
     if (!list) {
         list = v;
@@ -127,15 +127,10 @@ void Map::generate_path(path_t path[height][width])
 				)
 			{
 				path[p->pos.row + rowVals[i]][p->pos.col + colVals[i]].cost = c;
-				path[p->pos.row + rowVals[i]][p->pos.col + colVals[i]].to.row = p->pos.row;
-				path[p->pos.row + rowVals[i]][p->pos.col + colVals[i]].to.col = p->pos.col;
 				heap_decrease_key_no_replace(&h, path[p->pos.row + rowVals[i]][p->pos.col + colVals[i]].hn);
 			}
 		}
 	}
-
-    path[pc->row][pc->col].to.col = pc->col;
-    path[pc->row][pc->col].to.row = pc->row;
 }
 
 Map::~Map()
@@ -168,17 +163,26 @@ int Map::move(Sprite &c, int dy, int dx)
     return 0;
 }
 
-int Map::moveTo(Sprite &c, int y, int x)
+int Map::followPath(Sprite &c, path_t path[height][width])
 {
-    sprites[c.row][c.col] = NULL;
-    mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
-    c.row = y;
-    c.col = x;
-    sprites[c.row][c.col] = &c;
-    mvaddch(c.row + 1, c.col + 1, c.getChar());
-    c.increment(board[c.row][c.col]->getCost());
+    int i, d = -1, cost = INT_MAX;
 
-    return 0;
+    for (i = 0; i < 4; i++) {
+        if (
+            0 <= c.row + dirs[i][0] && c.row + dirs[i][0] < height &&
+            0 <= c.col + dirs[i][1] && c.col + dirs[i][1] < width &&
+            path[c.row + dirs[i][0]][c.col + dirs[i][1]].cost < cost
+        ) {
+            cost = path[c.row + dirs[i][0]][c.col + dirs[i][1]].cost;
+            d = i;
+        }
+    }
+
+    if (d > -1) {
+        return move(c, dirs[d][0], dirs[d][1]);
+    }
+
+    return -1;
 }
 
 int Map::move(Projectile &c, int dy, int dx)
@@ -214,17 +218,4 @@ Move *Map::destroy(Sprite *s)
         remove_from_list(s);
         delete s;
         return returning;
-}
-
-void printPath(path_t path[height][width])
-{
-
-    int i, j;
-
-    for (i = 0; i < height; i++) {
-        for (j = 0; j < width; j++) {
-            printf("%d ", path[i][j].cost);
-        }
-        printf("\n");
-    }
 }

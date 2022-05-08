@@ -16,17 +16,14 @@ Zombie *Zombie::getZombie(int r, int c)
 
 Move *Zombie::action(Map &map)
 {
-    int n;
+    if (rand() % 20) return next;
 
-    if ((rand() % 15)) {
-        return next;
-    }
+    int n = rand() % 4;
 
-    if (!(rand() % 10)) {
-        n = rand() % 4; // could be calling zombie.move(map) to allow for vistors
+    if (rand() % 2) {
         map.validMove(*this, dirs[n][0], dirs[n][1]) && map.move(*this, dirs[n][0], dirs[n][1]);
     } else {
-        map.moveTo(*this, map.bz_path[row][col].to.row, map.bz_path[row][col].to.col);
+        map.followPath(*this, map.bz_path); // should make them follow A* for a more zombie feel
     }
 
     return next;

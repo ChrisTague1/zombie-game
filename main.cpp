@@ -24,7 +24,20 @@ void print_board(Map &map)
         }
     }
 
-    box(stdscr, 0, 0);
+    for (i = 0; i < width + 1; i++) {
+        mvaddch(0, i, '-');
+        mvaddch(height + 1, i, '-');
+    }
+
+    for (i = 0; i < height + 1; i++) {
+        mvaddch(i, 0, '|');
+        mvaddch(i, width + 1, '|');
+    }
+
+    mvaddch(0, 0, '+');
+    mvaddch(0, width + 1, '+');
+    mvaddch(height + 1, 0, '+');
+    mvaddch(height + 1, width + 1, '+');
 }
 
 int main(int argc, char *argv[])
@@ -37,9 +50,13 @@ int main(int argc, char *argv[])
     keypad(stdscr, 1);
     nodelay(stdscr, 1);
     refresh();
-    srand(time(NULL));
+    int seed;
+    seed = time(NULL);
+    // seed = 1651954934;
+    srand(seed);
     Map map;
     print_board(map);
+    // mvprintw(0, 0, "%d", seed);
 
     Move *current = NULL;
     Move *next = NULL;
@@ -63,7 +80,5 @@ int main(int argc, char *argv[])
     }
 
     endwin();
-
-    // printPath(map.bz_path);
     return 0;
 }
