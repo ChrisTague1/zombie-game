@@ -19,6 +19,11 @@ Zombie *Zombie::getZombie(int r, int c)
 
 Move *Zombie::action(Map &map)
 {
+    if (aboveZero()) {
+        decrement();
+        return next;
+    }
+    
     if (rand() % 100 > odds_moving) return next;
 
     int n = rand() % 4;

@@ -22,7 +22,7 @@ PC *PC::getPC(int r, int c)
     return pc;
 }
 
-bool kbhit(void)
+bool PC::kbhit(void)
 {
     int ch = getch();
 
@@ -75,7 +75,7 @@ bool PC::user_input(Map &map)
 
 void PC::move(int dy, int dx, Map &map)
 {
-    if (map.validMove(*this, dy, dx)) {
+    if (map.validMove(*this, dy, dx) && !aboveZero()) {
         map.move(*this, dy, dx);
         map.generate_path(map.bz_path);
     }
@@ -83,7 +83,11 @@ void PC::move(int dy, int dx, Map &map)
 
 Move *PC::action(Map &map)
 {
-    if (kbhit()) {
+    kbhit();
+
+    if (aboveZero()) {
+        decrement();
+    } else if (kbhit()) {
         on = user_input(map);
     }
 

@@ -54,21 +54,12 @@ int main(int argc, char *argv[])
     print_board(map);
 
     Move *current = NULL;
-    Move *next = NULL;
 
     while (map.pc->on) {
-        kbhit();
         current = map.list;
 
         while (current) {
-            if (current->aboveZero()) {
-                current->decrement();
-                current = current->next;
-            } else {
-                next = current->action(map);
-            }
-
-            current = next;
+            current = current->action(map);
         }
         
         usleep(frame_rate);

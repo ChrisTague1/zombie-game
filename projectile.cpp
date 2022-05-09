@@ -16,6 +16,11 @@ Projectile *Projectile::getProjectile(int r, int c, Direction d)
 
 Move *Projectile::action(Map &m)
 {
+    if (aboveZero()) {
+        decrement();
+        return next;
+    }
+    
     Sprite *target;
 
     if (distance < range && m.validMove(*this, dirs[dir][0], dirs[dir][1])) {
