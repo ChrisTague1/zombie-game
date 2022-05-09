@@ -3,7 +3,7 @@
 #include "map.h"
 #include "projectile.h"
 
-PC::PC(int r, int c): Sprite('@', r, c)
+PC::PC(int r, int c): Sprite('@', r, c), killed(0)
 {
     on = true;
 }
@@ -55,16 +55,16 @@ bool PC::user_input(Map &map)
             move(dirs[right][0], dirs[right][1], map);
             break;
         case 106: // shoot left
-            map.add_to_list(Projectile::getProjectile(row, col - 1, left));
+            map.add_to_list(Projectile::getProjectile(*this, row, col - 1, left));
             break;
         case 105: // shoot up
-            map.add_to_list(Projectile::getProjectile(row - 1, col, up));
+            map.add_to_list(Projectile::getProjectile(*this, row - 1, col, up));
             break;
         case 107: // shoot down
-            map.add_to_list(Projectile::getProjectile(row + 1, col, down));
+            map.add_to_list(Projectile::getProjectile(*this, row + 1, col, down));
             break;
         case 108: // shoot right
-            map.add_to_list(Projectile::getProjectile(row, col + 1, right));
+            map.add_to_list(Projectile::getProjectile(*this, row, col + 1, right));
             break;
         default:
             break;
@@ -75,7 +75,7 @@ bool PC::user_input(Map &map)
 
 void PC::move(int dy, int dx, Map &map)
 {
-    if (map.validMove(*this, dy, dx) && !aboveZero()) {
+    if (map.validMove(*this, dy, dx)) {
         map.move(*this, dy, dx);
         map.generate_path(map.bz_path);
     }
@@ -92,4 +92,10 @@ Move *PC::action(Map &map)
     }
 
     return next;
+}
+
+int PC::kill(void)
+{
+    mvprintw(height + 2, 0, "Kills: %d", ++killed);
+    return 0;
 }

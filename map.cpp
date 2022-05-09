@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include "size.h"
 #include <cstdio>
+#include "spawner.h"
 
 int Map::remove_from_list(Move *v)
 {
@@ -44,7 +45,7 @@ Map::Map()
     list = NULL;
     list_tail = NULL;
 
-    int i, j, z;
+    int i, j;
 
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
@@ -57,16 +58,6 @@ Map::Map()
         }
     }
 
-    z = 10 + rand() % 30;
-
-    while (z--) {
-        i = rand() % height;
-        j = rand() % width;
-
-        sprites[i][j] = Zombie::getZombie(i, j);
-        add_to_list(sprites[i][j]);
-    }
-
     pc = PC::getPC(height / 2, width / 2);
     sprites[pc->row][pc->col] = pc;
 
@@ -74,6 +65,7 @@ Map::Map()
     board[pc->row][pc->col] = new Grass();
 
     generate_path(bz_path);
+    add_to_list(new Spawner(100, 1, 2));
 }
 
 static int32_t path_comp(const void *key, const void *with) {

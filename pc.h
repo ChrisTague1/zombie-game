@@ -8,12 +8,15 @@ class PC: public Sprite {
         bool user_input(Map &map);
         PC(int r, int c);
         bool kbhit(void);
+        int killed;
     public:
         static PC *getPC(int r, int c);
         bool on;
         ~PC();
         Move *action(Map &m);
         void move(int dy, int dx, Map &map);
+        int kill(void);
+        int getKills(void) { return killed; }
 };
 
 #endif
