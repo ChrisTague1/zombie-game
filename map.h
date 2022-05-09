@@ -36,6 +36,7 @@ class Map {
         int followPath(Sprite &c, path_t path[height][width]);
         int move(Projectile &c, int dy, int dx);
         bool validMove(Sprite &c, int dy, int dx);
+        bool emptySpace(Sprite &c, int dy, int dx);
         PC *pc;
         Move *destroy(Sprite *s);
         path_t bz_path[height][width];
