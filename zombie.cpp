@@ -5,8 +5,8 @@
 
 Zombie::Zombie(int r, int c): Sprite('Z', r, c)
 {
-    odds_moving = 10 + rand() % 5;
-    odds_follow = 60 + rand() % 30;
+    odds_moving = 15 + rand() % 10;
+    odds_follow = 50 + rand() % 20;
 }
 
 Zombie::~Zombie()
