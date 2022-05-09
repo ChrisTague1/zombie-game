@@ -87,10 +87,10 @@ Move *PC::action(Map &map)
     printStats();
     kbhit();
 
-    // if (health <= 0) {
-    //     on = false;
-    //     return next;
-    // }
+    if (health <= 0) {
+        on = false;
+        return next;
+    }
 
     if (aboveZero()) {
         decrement();
