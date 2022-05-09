@@ -65,7 +65,7 @@ Map::Map()
     board[pc->row][pc->col] = new Grass();
 
     generate_path(bz_path);
-    add_to_list(new Spawner(100, 1, 2));
+    add_to_list(new Spawner(100, 1, 3));
 }
 
 static int32_t path_comp(const void *key, const void *with) {
@@ -164,7 +164,7 @@ int Map::followPath(Sprite &c, path_t path[height][width])
         }
     }
 
-    if (d > -1) {
+    if (d > -1 && emptySpace(c, dirs[d][0], dirs[d][1])) {
         return move(c, dirs[d][0], dirs[d][1]);
     }
 
@@ -193,6 +193,11 @@ bool Map::validMove(Sprite &c, int dy, int dx)
         c.col + dx < width &&
         board[c.row + dy][c.col + dx]->getCost() != INT_MAX
     );
+}
+
+bool Map::emptySpace(Sprite &c, int dy, int dx)
+{
+    return !sprites[c.row + dy][c.col + dx];
 }
 
 Move *Map::destroy(Sprite *s)

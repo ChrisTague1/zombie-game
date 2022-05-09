@@ -3,6 +3,7 @@
 #include "zombie.h"
 #include <cstdlib>
 #include <climits>
+#include <cmath>
 
 Spawner::Spawner(int delay, int guarantee, int possible): delay(delay), guarantee(guarantee), possible(possible)
 {}
@@ -23,7 +24,7 @@ Move *Spawner::action(Map &map)
         do {
             r = rand() % height;
             c = rand() % width;
-        } while (map.board[r][c]->getCost() < INT_MAX && !map.sprites[r][c]);
+        } while (map.board[r][c]->getCost() == INT_MAX || map.sprites[r][c] || sqrt(pow(map.pc->row - r, 2.0) + pow(map.pc->col - c, 2.0)) < 5.0);
 
         map.sprites[r][c] = Zombie::getZombie(r, c);
         map.add_to_list(map.sprites[r][c]);
