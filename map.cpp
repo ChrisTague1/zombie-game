@@ -89,6 +89,8 @@ void Map::generate_path(path_t path[height][width])
     static int rowVals[] = {-1, 1, 0, 0};
     static int colVals[] = {0, 0, -1, 1};
 
+    heap_init(&h, path_comp, NULL);
+
     for (i = 0; i < height; i++) {
 		for (j = 0; j < width; j++) {
 			path[i][j].pos.row = i;
@@ -98,14 +100,6 @@ void Map::generate_path(path_t path[height][width])
 			} else {
 				path[i][j].cost = INT_MAX;
 			}
-			path[i][j].hn = NULL;
-		}
-	}
-
-    heap_init(&h, path_comp, NULL);
-
-    for (i = 0; i < height; i++) {
-		for (j = 0; j < width; j++) {
 			if (board[i][j]->getCost() != INT_MAX) {
 				path[i][j].hn = heap_insert(&h, &path[i][j]);
 			} else {
