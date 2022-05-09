@@ -6,7 +6,7 @@
 #include <cmath>
 
 Spawner::Spawner(int delay, int guarantee, int possible): delay(delay), guarantee(guarantee), possible(possible)
-{}
+{ possible++; }
 
 Spawner::~Spawner()
 {}
