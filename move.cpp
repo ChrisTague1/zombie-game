@@ -8,7 +8,7 @@ void Move::decrement() {
     movement--;
 }
 
-void Move::increment(char i) {
+void Move::increment(int i) {
     movement += i;
 }
 

@@ -7,14 +7,14 @@ class Move {
     public:
         bool aboveZero();
         void decrement();
-        void increment(char i);
+        void increment(int i);
         virtual ~Move() {}
         Move *prev;
         Move *next;
         virtual Move *action(Map &m) = 0;
     protected:
         Move();
-        char movement;
+        int movement;
 };
 
 #endif

@@ -40,7 +40,6 @@ void print_board(Map &map)
 int main(int argc, char *argv[])
 {
     initscr();
-    resizeterm(height + 2, width + 2);
     raw();
     noecho();
     curs_set(0);
