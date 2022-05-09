@@ -23,7 +23,6 @@ typedef struct path {
 
 class Map {
     private:
-        bool user_input(PC &pc);
         Move *list_tail;
         void generate_path(path_t path[height][width]);
         friend class PC;

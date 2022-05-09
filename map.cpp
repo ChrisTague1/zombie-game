@@ -191,7 +191,6 @@ bool Map::validMove(Sprite &c, int dy, int dx)
         c.row + dy < height &&
         c.col + dx >= 0 &&
         c.col + dx < width &&
-        !c.aboveZero() &&
         board[c.row + dy][c.col + dx]->getCost() != INT_MAX
     );
 }

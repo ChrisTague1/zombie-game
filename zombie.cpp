@@ -26,7 +26,18 @@ Move *Zombie::action(Map &map)
     
     if (rand() % 100 > odds_moving) return next;
 
-    int n = rand() % 4;
+    int n;
+
+    for (n = 0; n < 4; n++) {
+        if (map.sprites[row + dirs[n][0]][col + dirs[n][1]] == map.pc) {
+            mvprintw(height + 3, 0, "You have been hit");
+            increment(10);
+            map.pc->health--;
+            return next;
+        }
+    }
+
+    n = rand() % 4;
 
     if (rand() % 100 > odds_follow) {
         map.validMove(*this, dirs[n][0], dirs[n][1]) && map.move(*this, dirs[n][0], dirs[n][1]);
