@@ -10,6 +10,52 @@
 #include <cstdio>
 #include "spawner.h"
 
+Map::Map()
+{
+    list = NULL;
+    list_tail = NULL;
+
+    int i, j;
+
+    for (i = 0; i < height; i++) {
+        for (j = 0; j < width; j++) {
+            sprites[i][j] = NULL;
+            if (rand() % 20 == 0) {
+                board[i][j] = new Building();
+            } else {
+                board[i][j] = new Grass();
+            }
+        }
+    }
+
+    pc = PC::getPC(height / 2, width / 2);
+    sprites[pc->row][pc->col] = pc;
+
+    add_to_list(pc);
+    board[pc->row][pc->col] = new Grass();
+
+    generate_path(bz_path);
+    add_to_list(new Spawner(100, 1, 3));
+}
+
+Map::~Map()
+{
+    int i, j;
+
+    for (i = 0; i < height; i++) {
+        for (j = 0; j < width; j++) {
+            if (board[i][j]) {
+                delete board[i][j];
+            }
+        }
+    }
+
+    while ((list_tail = list->next)) {
+        delete list;
+        list = list_tail;
+    }
+}
+
 int Map::remove_from_list(Move *v)
 {
     if (v == list) {
@@ -38,34 +84,6 @@ int Map::add_to_list(Move *v)
     }
 
     return 0;
-}
-
-Map::Map()
-{
-    list = NULL;
-    list_tail = NULL;
-
-    int i, j;
-
-    for (i = 0; i < height; i++) {
-        for (j = 0; j < width; j++) {
-            sprites[i][j] = NULL;
-            if (rand() % 20 == 0) {
-                board[i][j] = new Building();
-            } else {
-                board[i][j] = new Grass();
-            }
-        }
-    }
-
-    pc = PC::getPC(height / 2, width / 2);
-    sprites[pc->row][pc->col] = pc;
-
-    add_to_list(pc);
-    board[pc->row][pc->col] = new Grass();
-
-    generate_path(bz_path);
-    add_to_list(new Spawner(100, 1, 3));
 }
 
 static int32_t path_comp(const void *key, const void *with) {
@@ -119,24 +137,6 @@ void Map::generate_path(path_t path[height][width])
 	}
 }
 
-Map::~Map()
-{
-    int i, j;
-
-    for (i = 0; i < height; i++) {
-        for (j = 0; j < width; j++) {
-            if (board[i][j]) {
-                delete board[i][j];
-            }
-        }
-    }
-
-    while ((list_tail = list->next)) {
-        delete list;
-        list = list_tail;
-    }
-}
-
 int Map::move(Sprite &c, int dy, int dx)
 {
     sprites[c.row][c.col] = NULL;
@@ -145,6 +145,19 @@ int Map::move(Sprite &c, int dy, int dx)
     sprites[c.row][c.col] = &c;
     mvaddch(c.row + 1, c.col + 1, c.getChar());
     c.increment(board[c.row][c.col]->getCost());
+
+    return 0;
+}
+
+int Map::move(Projectile &c, int dy, int dx)
+{
+    sprites[c.row][c.col] = NULL;
+    mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
+    c.updatePos(dy, dx);
+    sprites[c.row][c.col] = &c;
+    mvaddch(c.row + 1, c.col + 1, c.getChar());
+    c.increment(c.getSpeed());
+    c.upDistance();
 
     return 0;
 }
@@ -169,19 +182,6 @@ int Map::followPath(Sprite &c, path_t path[height][width])
     }
 
     return -1;
-}
-
-int Map::move(Projectile &c, int dy, int dx)
-{
-    sprites[c.row][c.col] = NULL;
-    mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
-    c.updatePos(dy, dx);
-    sprites[c.row][c.col] = &c;
-    mvaddch(c.row + 1, c.col + 1, c.getChar());
-    c.increment(c.getSpeed());
-    c.upDistance();
-
-    return 0;
 }
 
 bool Map::validMove(Sprite &c, int dy, int dx)

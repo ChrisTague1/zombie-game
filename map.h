@@ -33,8 +33,8 @@ class Map {
         int add_to_list(Move *v);
         int remove_from_list(Move *v);
         int move(Sprite &c, int dy, int dx);
-        int followPath(Sprite &c, path_t path[height][width]);
         int move(Projectile &c, int dy, int dx);
+        int followPath(Sprite &c, path_t path[height][width]);
         bool validMove(Sprite &c, int dy, int dx);
         bool emptySpace(Sprite &c, int dy, int dx);
         PC *pc;
