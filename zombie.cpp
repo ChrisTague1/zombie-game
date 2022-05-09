@@ -30,7 +30,6 @@ Move *Zombie::action(Map &map)
 
     for (n = 0; n < 4; n++) {
         if (map.sprites[row + dirs[n][0]][col + dirs[n][1]] == map.pc) {
-            mvprintw(height + 3, 0, "You have been hit");
             increment(10);
             map.pc->health--;
             return next;

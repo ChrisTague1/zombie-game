@@ -2,7 +2,6 @@
 #define pc_H
 
 #include "sprite.h"
-#include <ncurses.h>
 
 class PC: public Sprite {
     private:
