@@ -2,6 +2,8 @@
 `6/9/2022`  
 The printing of the board needs to be handled better. Currently, the board doesn't refresh, which has been causing some issues. I should prevent the spawner from putting zombies with a radius of the player. Zombies should also not be able to stack on top of eachother.
 
+Added buildings and optimized dikstras algorithm. The next step is going to be finding some way to make the game progressively get harder. It should start out easy, and then get more and more difficult. I think the ideal game length would be about 5-10 minutes. Without any abilities like better weapons or more health or faster movement, you should probably be struggling around 1-2 minutes in.
+
 `6/8/2022`  
 Got zombies to follow the player using dikstras algorithm. I wasn't super careful porting it over from an old project I had which caused some problems. Previously, I gave each cell a 'to' addribute, which told it where the most efficient place to go to next was. This would help with preformance, so I may add it back, but for now I am keeping it gone. I also want to use A* instead, with a pretty heavy emphasis on getting closer to the player each time rather than taking the most efficient route. This will make them feel more like zombies.
 
