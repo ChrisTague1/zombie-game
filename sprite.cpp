@@ -11,5 +11,5 @@ void Sprite::updatePos(int dy, int dx)
     col += dx;
 }
 
-Sprite::Sprite(char ch, int r, int c): c(ch), row(r), col(c)
+Sprite::Sprite(char ch, int r, int c, int health): c(ch), row(r), col(c), health(health)
 {}

@@ -40,7 +40,7 @@ Map::Map(): num_zombies(0)
         j = rand() % width;
     } while(board[i][j]->getCost() == INT_MAX);
 
-    pc = PC::getPC(i, j);
+    pc = PC::getPC(i, j, 10);
     sprites[pc->row][pc->col] = pc;
     add_to_list(pc);
 
@@ -200,6 +200,10 @@ void Map::generate_path(path_t path[height][width])
 
 int Map::move(Sprite &c, int dy, int dx)
 {
+    if (sprites[c.row + dy][c.col + dx]) {
+        c.collide(sprites[c.row + dy][c.col + dx], *this);
+        return 1;
+    }
     sprites[c.row][c.col] = NULL;
     mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
     c.updatePos(dy, dx);
@@ -212,6 +216,10 @@ int Map::move(Sprite &c, int dy, int dx)
 
 int Map::move(Projectile &c, int dy, int dx)
 {
+    if (sprites[c.row + dy][c.col + dx]) {
+        c.collide(sprites[c.row + dy][c.col + dx], *this);
+        return 1;
+    }
     sprites[c.row][c.col] = NULL;
     mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
     c.updatePos(dy, dx);
@@ -232,11 +240,6 @@ bool Map::validMove(Sprite &c, int dy, int dx)
         c.col + dx < width &&
         board[c.row + dy][c.col + dx]->getCost() != INT_MAX
     );
-}
-
-bool Map::emptySpace(Sprite &c, int dy, int dx)
-{
-    return !sprites[c.row + dy][c.col + dx];
 }
 
 Move *Map::destroy(Sprite *s)
