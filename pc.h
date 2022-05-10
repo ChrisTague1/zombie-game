@@ -6,12 +6,12 @@
 class PC: public Sprite {
     private:
         bool user_input(Map &map);
-        PC(int r, int c);
+        PC(int r, int c, int health);
         bool kbhit(void);
         int kills;
         void printStats(void);
     public:
-        static PC *getPC(int r, int c);
+        static PC *getPC(int r, int c, int health);
         bool on;
         ~PC();
         Move *action(Map &m);
@@ -19,7 +19,6 @@ class PC: public Sprite {
         int kill(void);
         unsigned int money;
         int getKills(void) { return kills; }
-        int health;
         int collide(Sprite *s, Map &map);
         int on_collision(PC *pc, Map &map);
         int on_collision(Zombie *zombie, Map &map);

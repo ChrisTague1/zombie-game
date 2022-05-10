@@ -5,11 +5,11 @@
 
 class Zombie: public Sprite {
     private:
-        Zombie(int r, int c);
+        Zombie(int r, int c, int health);
         char odds_moving;
         char odds_follow;
     public:
-        static Zombie *getZombie(int r, int c);
+        static Zombie *getZombie(int r, int c, int health);
         ~Zombie();
         Move *action(Map &m);
         int collide(Sprite *s, Map &map);

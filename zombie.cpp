@@ -3,7 +3,7 @@
 #include "map.h"
 #include "ncurses.h"
 
-Zombie::Zombie(int r, int c): Sprite('Z', r, c)
+Zombie::Zombie(int r, int c, int health): Sprite('Z', r, c, health)
 {
     odds_moving = 15 + rand() % 10;
     odds_follow = 50 + rand() % 20;
@@ -12,9 +12,9 @@ Zombie::Zombie(int r, int c): Sprite('Z', r, c)
 Zombie::~Zombie()
 {}
 
-Zombie *Zombie::getZombie(int r, int c)
+Zombie *Zombie::getZombie(int r, int c, int health)
 {
-    return new Zombie(r, c);
+    return new Zombie(r, c, health);
 }
 
 Move *Zombie::action(Map &map)
@@ -22,6 +22,8 @@ Move *Zombie::action(Map &map)
     if (aboveZero()) {
         decrement();
         return next;
+    } else if (health <= 0) {
+        return map.destroy(this);
     }
     
     if (rand() % 100 > odds_moving) return next;
@@ -63,8 +65,9 @@ int Zombie::on_collision(Zombie *zombie, Map &map)
 
 int Zombie::on_collision(Projectile *projectile, Map &map)
 {
-    map.pc->kill();
-    map.destroy(this);
+    projectile->pc->kill();
+    health--;
     map.num_zombies--;
-    return 0; // stuff will go here
+    projectile->health--;
+    return 0;
 }

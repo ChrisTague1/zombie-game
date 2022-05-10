@@ -3,21 +3,20 @@
 #include "map.h"
 #include "projectile.h"
 
-PC::PC(int r, int c): Sprite('@', r, c), kills(0), money(0)
+PC::PC(int r, int c, int health): Sprite('@', r, c, health), kills(0), money(0)
 {
     on = true;
-    health = 10;
 }
 
 PC::~PC()
 {}
 
-PC *PC::getPC(int r, int c)
+PC *PC::getPC(int r, int c, int health)
 {
     static PC *pc;
 
     if (!pc) {
-        pc = new PC(r, c);
+        pc = new PC(r, c, health);
     }
 
     return pc;
@@ -56,16 +55,16 @@ bool PC::user_input(Map &map)
             move(dirs[right][0], dirs[right][1], map);
             break;
         case 106: // shoot left
-            map.validMove(*this, 0, -1) && map.add_to_list(Projectile::getProjectile(*this, row, col - 1, left));
+            map.validMove(*this, 0, -1) && map.add_to_list(Projectile::getProjectile(this, row, col - 1, left, 1));
             break;
         case 105: // shoot up
-            map.validMove(*this, -1, 0) && map.add_to_list(Projectile::getProjectile(*this, row - 1, col, up));
+            map.validMove(*this, -1, 0) && map.add_to_list(Projectile::getProjectile(this, row - 1, col, up, 1));
             break;
         case 107: // shoot down
-            map.validMove(*this, 1, 0) && map.add_to_list(Projectile::getProjectile(*this, row + 1, col, down));
+            map.validMove(*this, 1, 0) && map.add_to_list(Projectile::getProjectile(this, row + 1, col, down, 1));
             break;
         case 108: // shoot right
-            map.validMove(*this, 0, 1) && map.add_to_list(Projectile::getProjectile(*this, row, col + 1, right));
+            map.validMove(*this, 0, 1) && map.add_to_list(Projectile::getProjectile(this, row, col + 1, right, 1));
             break;
         default:
             break;

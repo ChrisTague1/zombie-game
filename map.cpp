@@ -40,7 +40,7 @@ Map::Map(): num_zombies(0)
         j = rand() % width;
     } while(board[i][j]->getCost() == INT_MAX);
 
-    pc = PC::getPC(i, j);
+    pc = PC::getPC(i, j, 10);
     sprites[pc->row][pc->col] = pc;
     add_to_list(pc);
 

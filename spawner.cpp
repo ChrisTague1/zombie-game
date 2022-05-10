@@ -31,7 +31,7 @@ Move *Spawner::action(Map &map)
             c = rand() % width;
         } while (map.board[r][c]->getCost() == INT_MAX || map.sprites[r][c] || sqrt(pow(map.pc->row - r, 2.0) + pow(map.pc->col - c, 2.0)) < 5.0);
 
-        map.sprites[r][c] = Zombie::getZombie(r, c);
+        map.sprites[r][c] = Zombie::getZombie(r, c, 1);
         map.add_to_list(map.sprites[r][c]);
         map.num_zombies++;
     }
