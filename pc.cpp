@@ -76,7 +76,7 @@ bool PC::user_input(Map &map)
 
 void PC::move(int dy, int dx, Map &map)
 {
-    if (map.validMove(*this, dy, dx)) {
+    if (map.validMove(*this, dy, dx) && map.emptySpace(*this, dy, dx)) {
         map.move(*this, dy, dx);
         map.generate_path(map.bz_path);
     }
