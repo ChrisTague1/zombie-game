@@ -242,11 +242,6 @@ bool Map::validMove(Sprite &c, int dy, int dx)
     );
 }
 
-bool Map::emptySpace(Sprite &c, int dy, int dx)
-{
-    return !sprites[c.row + dy][c.col + dx];
-}
-
 Move *Map::destroy(Sprite *s)
 {
         Move *returning = s->next;

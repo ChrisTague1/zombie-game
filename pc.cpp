@@ -54,17 +54,17 @@ bool PC::user_input(Map &map)
         case 100:
             move(dirs[right][0], dirs[right][1], map);
             break;
-        case 106: // shoot left
-            map.validMove(*this, 0, -1) && map.add_to_list(Projectile::getProjectile(this, row, col - 1, left, 1));
+        case 106:
+            shoot(left, map);
             break;
-        case 105: // shoot up
-            map.validMove(*this, -1, 0) && map.add_to_list(Projectile::getProjectile(this, row - 1, col, up, 1));
+        case 105:
+            shoot(up, map);
             break;
-        case 107: // shoot down
-            map.validMove(*this, 1, 0) && map.add_to_list(Projectile::getProjectile(this, row + 1, col, down, 1));
+        case 107:
+            shoot(down, map);
             break;
-        case 108: // shoot right
-            map.validMove(*this, 0, 1) && map.add_to_list(Projectile::getProjectile(this, row, col + 1, right, 1));
+        case 108:
+            shoot(right, map);
             break;
         default:
             break;
@@ -73,10 +73,20 @@ bool PC::user_input(Map &map)
     return true;
 }
 
+void PC::shoot(Direction d, Map &map)
+{
+    if (!map.validMove(*this, dirs[d][0], dirs[d][1])) return;
+
+    Projectile *proj = Projectile::getProjectile(this, row + dirs[d][0], col + dirs[d][1], d, 1);
+    map.add_to_list(proj);
+    if (map.sprites[proj->row][proj->col]) {
+        proj->collide(map.sprites[proj->row][proj->col], map);
+    }
+}
+
 void PC::move(int dy, int dx, Map &map)
 {
-    if (map.validMove(*this, dy, dx) && map.emptySpace(*this, dy, dx)) {
-        map.move(*this, dy, dx);
+    if (map.validMove(*this, dy, dx) && !map.move(*this, dy, dx)) {
         map.generate_path(map.bz_path);
     }
 }
@@ -119,7 +129,11 @@ int PC::on_collision(PC *pc, Map &map)
 { return 0; }
 
 int PC::on_collision(Zombie *zombie, Map &map)
-{ return 0; }
+{
+    zombie->increment(10);
+    health--;
+    return 0;
+}
 
 int PC::on_collision(Projectile *projectile, Map &map)
 { return 0; }

@@ -10,6 +10,7 @@ class PC: public Sprite {
         bool kbhit(void);
         int kills;
         void printStats(void);
+        void shoot(Direction d, Map &map);
     public:
         static PC *getPC(int r, int c, int health);
         bool on;
