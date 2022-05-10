@@ -79,6 +79,7 @@ void PC::shoot(Direction d, Map &map)
 
     Projectile *proj = Projectile::getProjectile(this, row + dirs[d][0], col + dirs[d][1], d, 1);
     map.add_to_list(proj);
+    increment(1);
     if (map.sprites[proj->row][proj->col]) {
         proj->collide(map.sprites[proj->row][proj->col], map);
     }
