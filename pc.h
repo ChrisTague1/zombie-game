@@ -17,6 +17,7 @@ class PC: public Sprite {
         Move *action(Map &m);
         void move(int dy, int dx, Map &map);
         int kill(void);
+        unsigned int money;
         int getKills(void) { return kills; }
         int health;
 };

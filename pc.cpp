@@ -3,7 +3,7 @@
 #include "map.h"
 #include "projectile.h"
 
-PC::PC(int r, int c): Sprite('@', r, c), kills(0)
+PC::PC(int r, int c): Sprite('@', r, c), kills(0), money(0)
 {
     on = true;
     health = 10;
@@ -103,11 +103,12 @@ Move *PC::action(Map &map)
 
 int PC::kill(void)
 {
+    money++;
     return ++kills;
 }
 
 void PC::printStats(void)
 {
     mvprintw(height + 2, 0, "                                    ");
-    mvprintw(height + 2, 0, "Kills: %d | Health: %d", kills, health);
+    mvprintw(height + 2, 0, "Kills: %d | Health: %d | Money %d", kills, health, money);
 }
