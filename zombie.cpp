@@ -43,7 +43,7 @@ Move *Zombie::action(Map &map)
         map.emptySpace(*this, dirs[n][0], dirs[n][1]) && 
         map.move(*this, dirs[n][0], dirs[n][1]);
     } else {
-        map.followPath(*this, map.bz_path); // should make them follow A* for a more zombie feel
+        map.followPath(*this, map.bz_path);
     }
 
     return next;
