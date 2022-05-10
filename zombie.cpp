@@ -49,3 +49,22 @@ Move *Zombie::action(Map &map)
 
     return next;
 }
+
+int Zombie::collide(Sprite *s, Map &map)
+{ return s->on_collision(this, map); }
+
+int Zombie::on_collision(PC *pc, Map &map)
+{
+    return 0; // stuff will go here
+}
+
+int Zombie::on_collision(Zombie *zombie, Map &map)
+{ return 0; }
+
+int Zombie::on_collision(Projectile *projectile, Map &map)
+{
+    map.pc->kill();
+    map.destroy(this);
+    map.num_zombies--;
+    return 0; // stuff will go here
+}

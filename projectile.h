@@ -11,6 +11,10 @@ class Projectile: public Sprite {
         Move *action(Map &m);
         int getSpeed() { return speed; }
         void upDistance() { distance++; }
+        int collide(Sprite *s, Map &map);
+        int on_collision(PC *pc, Map &map);
+        int on_collision(Zombie *zombie, Map &map);
+        int on_collision(Projectile *projectile, Map &map);
     private:
         Projectile(PC &pc, int r, int c, Direction d);
         int speed;

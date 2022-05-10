@@ -12,6 +12,10 @@ class Zombie: public Sprite {
         static Zombie *getZombie(int r, int c);
         ~Zombie();
         Move *action(Map &m);
+        int collide(Sprite *s, Map &map);
+        int on_collision(PC *pc, Map &map);
+        int on_collision(Zombie *zombie, Map &map);
+        int on_collision(Projectile *projectile, Map &map);
 };
 
 #endif

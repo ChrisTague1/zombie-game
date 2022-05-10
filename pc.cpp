@@ -112,3 +112,15 @@ void PC::printStats(void)
     mvprintw(height + 2, 0, "                                    ");
     mvprintw(height + 2, 0, "Kills: %d | Health: %d | Money %d", kills, health, money);
 }
+
+int PC::collide(Sprite *s, Map &map)
+{ return s->on_collision(this, map); }
+
+int PC::on_collision(PC *pc, Map &map)
+{ return 0; }
+
+int PC::on_collision(Zombie *zombie, Map &map)
+{ return 0; }
+
+int PC::on_collision(Projectile *projectile, Map &map)
+{ return 0; }
