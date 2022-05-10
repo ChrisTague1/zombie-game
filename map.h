@@ -37,12 +37,12 @@ class Map {
         int remove_from_list(Move *v);
         int move(Sprite &c, int dy, int dx);
         int move(Projectile &c, int dy, int dx);
-        int followPath(Sprite &c, path_t path[height][width]);
         bool validMove(Sprite &c, int dy, int dx);
         bool emptySpace(Sprite &c, int dy, int dx);
         PC *pc;
         Move *destroy(Sprite *s);
         path_t bz_path[height][width];
+        unsigned int num_zombies;
         Map();
         ~Map();
 };
