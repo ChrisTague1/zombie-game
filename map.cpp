@@ -21,16 +21,17 @@ Map::Map()
         for (j = 0; j < width; j++) {
             sprites[i][j] = NULL;
             if (rand() % 20 == 0) {
-                board[i][j] = new Building();
+                board[i][j] = new Tree();
             } else {
                 board[i][j] = new Grass();
             }
         }
     }
-    addBuilding();
-    addBuilding();
-    addBuilding();
-    addBuilding();
+
+    i = 4 + rand() % (height / 8);
+    for (j = 0; j < i; j++) {
+        addBuilding(i + 1);
+    }
 
 
 
@@ -47,7 +48,7 @@ Map::Map()
     add_to_list(new Spawner(100, 1, 3));
 }
 
-void Map::addBuilding(void)
+void Map::addBuilding(int wall)
 {
     int r, c, y, x, i, j, s;
 
@@ -70,25 +71,25 @@ void Map::addBuilding(void)
         }
     }
 
-    if (rand() % 4) {
+    if (rand() % wall) {
         s = 1 + rand() % (r - 2);
         delete board[y + s][x + c - 1];
         board[y + s][x + c - 1] = new Tile();
     }
 
-    if (rand() % 4) {
+    if (rand() % wall) {
         s = rand() % (r - 2);
         delete board[y + s][x];
         board[y + s][x] = new Tile();
     }
 
-    if (rand() % 4) {
+    if (rand() % wall) {
         s = rand() % (c - 2);
         delete board[y][x + s];
         board[y][x + s] = new Tile();
     }
 
-    if (rand() % 4) {
+    if (rand() % wall) {
         s = rand() % (c - 2);
         delete board[y + r - 1][x + s];
         board[y + r - 1][x + s] = new Tile();

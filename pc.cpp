@@ -56,16 +56,16 @@ bool PC::user_input(Map &map)
             move(dirs[right][0], dirs[right][1], map);
             break;
         case 106: // shoot left
-            map.add_to_list(Projectile::getProjectile(*this, row, col - 1, left));
+            map.validMove(*this, 0, -1) && map.add_to_list(Projectile::getProjectile(*this, row, col - 1, left));
             break;
         case 105: // shoot up
-            map.add_to_list(Projectile::getProjectile(*this, row - 1, col, up));
+            map.validMove(*this, -1, 0) && map.add_to_list(Projectile::getProjectile(*this, row - 1, col, up));
             break;
         case 107: // shoot down
-            map.add_to_list(Projectile::getProjectile(*this, row + 1, col, down));
+            map.validMove(*this, 1, 0) && map.add_to_list(Projectile::getProjectile(*this, row + 1, col, down));
             break;
         case 108: // shoot right
-            map.add_to_list(Projectile::getProjectile(*this, row, col + 1, right));
+            map.validMove(*this, 0, 1) && map.add_to_list(Projectile::getProjectile(*this, row, col + 1, right));
             break;
         default:
             break;

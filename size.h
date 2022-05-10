@@ -1,8 +1,8 @@
 #ifndef size_H
 #define size_H
 
-#define height 45
-#define width 135
+#define height 24
+#define width 80
 
 /**
  * height 45

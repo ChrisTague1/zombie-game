@@ -29,10 +29,18 @@ char Grass::getChar()
     return ' ';
 }
 
-Tile::Tile(): Terrain(1)
+Tile::Tile(): Terrain(2)
 {}
 
 char Tile::getChar()
 {
     return '.';
+}
+
+Tree::Tree(): Terrain(10)
+{}
+
+char Tree::getChar()
+{
+    return '^';
 }

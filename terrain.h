@@ -31,4 +31,10 @@ class Tile: public Terrain {
         char getChar();
 };
 
+class Tree: public Terrain {
+    public:
+        Tree();
+        char getChar();
+};
+
 #endif
