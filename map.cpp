@@ -10,7 +10,7 @@
 #include <cstdio>
 #include "spawner.h"
 
-Map::Map()
+Map::Map(): num_zombies(0)
 {
     list = NULL;
     list_tail = NULL;
@@ -188,8 +188,8 @@ void Map::generate_path(path_t path[height][width])
                 if ((c = p->cost + board[p->pos.row][p->pos.col]->getCost()) < path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].cost) {
                     path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].cost = c;
                     heap_decrease_key_no_replace(&h, path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].hn);
-                    // path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].to.row = dirs[i][0]; // something goes wrong here
-                    // path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].to.col = dirs[i][1];
+                    path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].to.row = -dirs[i][0];
+                    path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].to.col = -dirs[i][1];
                 }
             }
         }
@@ -221,28 +221,6 @@ int Map::move(Projectile &c, int dy, int dx)
     c.upDistance();
 
     return 0;
-}
-
-int Map::followPath(Sprite &c, path_t path[height][width])
-{
-    int i, d = -1, cost = INT_MAX;
-
-    for (i = 0; i < 4; i++) {
-        if (
-            0 <= c.row + dirs[i][0] && c.row + dirs[i][0] < height &&
-            0 <= c.col + dirs[i][1] && c.col + dirs[i][1] < width &&
-            path[c.row + dirs[i][0]][c.col + dirs[i][1]].cost < cost
-        ) {
-            cost = path[c.row + dirs[i][0]][c.col + dirs[i][1]].cost;
-            d = i;
-        }
-    }
-
-    if (d > -1 && emptySpace(c, dirs[d][0], dirs[d][1])) {
-        return move(c, dirs[d][0], dirs[d][1]);
-    }
-
-    return -1;
 }
 
 bool Map::validMove(Sprite &c, int dy, int dx)

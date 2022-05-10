@@ -28,6 +28,7 @@ Move *Projectile::action(Map &m)
         if ((target = m.sprites[row + dirs[dir][0]][col + dirs[dir][1]])) {
             pc.kill();
             m.destroy(target);
+            m.num_zombies--;
             return m.destroy(this);
         }
         m.move(*this, dirs[dir][0], dirs[dir][1]);

@@ -18,6 +18,11 @@ Move *Spawner::action(Map &map)
         return next;
     }
 
+    if (map.num_zombies > (height * width / 50) + 5) {
+        increment(delay / 2);
+        return next;
+    }
+
     int r, c, i = guarantee + rand() % possible;
 
     while (i-- > 0) {
@@ -28,6 +33,7 @@ Move *Spawner::action(Map &map)
 
         map.sprites[r][c] = Zombie::getZombie(r, c);
         map.add_to_list(map.sprites[r][c]);
+        map.num_zombies++;
     }
 
     increment(delay);

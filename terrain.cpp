@@ -29,7 +29,7 @@ char Grass::getChar()
     return ' ';
 }
 
-Tile::Tile(): Terrain(2)
+Tile::Tile(): Terrain(3)
 {}
 
 char Tile::getChar()
@@ -37,7 +37,7 @@ char Tile::getChar()
     return '.';
 }
 
-Tree::Tree(): Terrain(10)
+Tree::Tree(): Terrain(7)
 {}
 
 char Tree::getChar()

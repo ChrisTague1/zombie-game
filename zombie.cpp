@@ -43,7 +43,8 @@ Move *Zombie::action(Map &map)
         map.emptySpace(*this, dirs[n][0], dirs[n][1]) && 
         map.move(*this, dirs[n][0], dirs[n][1]);
     } else {
-        map.followPath(*this, map.bz_path);
+        map.emptySpace(*this, map.bz_path[row][col].to.row, map.bz_path[row][col].to.col) && 
+        map.move(*this, map.bz_path[row][col].to.row, map.bz_path[row][col].to.col);
     }
 
     return next;
