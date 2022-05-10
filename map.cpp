@@ -27,15 +27,72 @@ Map::Map()
             }
         }
     }
+    addBuilding();
+    addBuilding();
+    addBuilding();
+    addBuilding();
 
-    pc = PC::getPC(height / 2, width / 2);
+
+
+    do {
+        i = rand() % height;
+        j = rand() % width;
+    } while(board[i][j]->getCost() == INT_MAX);
+
+    pc = PC::getPC(i, j);
     sprites[pc->row][pc->col] = pc;
-
     add_to_list(pc);
-    board[pc->row][pc->col] = new Grass();
 
     generate_path(bz_path);
     add_to_list(new Spawner(100, 1, 3));
+}
+
+void Map::addBuilding(void)
+{
+    int r, c, y, x, i, j, s;
+
+    r = 5 + rand() % ((height - 5) / 2);
+    c = 5 + rand() % ((width - 5) / 2);
+
+    y = rand() % (height - r);
+    x = rand() % (width - c);
+
+    for (i = y; i < y + r; i++) {
+        for (j = x; j < x + c; j++) {
+            board[i][j] = new Building();
+        }
+    }
+
+    for (i = y + 1; i < y + r - 1; i++) {
+        for (j = x + 1; j < x + c - 1; j++) {
+            delete board[i][j];
+            board[i][j] = new Tile();
+        }
+    }
+
+    if (rand() % 4) {
+        s = 1 + rand() % (r - 2);
+        delete board[y + s][x + c - 1];
+        board[y + s][x + c - 1] = new Tile();
+    }
+
+    if (rand() % 4) {
+        s = rand() % (r - 2);
+        delete board[y + s][x];
+        board[y + s][x] = new Tile();
+    }
+
+    if (rand() % 4) {
+        s = rand() % (c - 2);
+        delete board[y][x + s];
+        board[y][x + s] = new Tile();
+    }
+
+    if (rand() % 4) {
+        s = rand() % (c - 2);
+        delete board[y + r - 1][x + s];
+        board[y + r - 1][x + s] = new Tile();
+    }
 }
 
 Map::~Map()
@@ -92,49 +149,52 @@ static int32_t path_comp(const void *key, const void *with) {
 
 void Map::generate_path(path_t path[height][width])
 {
-    int32_t c;
-    path_t *p;
-    heap_t h;
     int i, j;
-    static int rowVals[] = {-1, 1, 0, 0};
-    static int colVals[] = {0, 0, -1, 1};
-
-    heap_init(&h, path_comp, NULL);
+    path_t *p;
+    int32_t c;
 
     for (i = 0; i < height; i++) {
-		for (j = 0; j < width; j++) {
-			path[i][j].pos.row = i;
-			path[i][j].pos.col = j;
-			if (pc == sprites[i][j]) {
-				path[i][j].cost = 0;
-			} else {
-				path[i][j].cost = INT_MAX;
-			}
-			if (board[i][j]->getCost() != INT_MAX) {
-				path[i][j].hn = heap_insert(&h, &path[i][j]);
-			} else {
-				path[i][j].hn = NULL;
-			}
-		}
-	}
+        for (j = 0; j < width; j++) {
+            path[i][j].pos.row = i;
+            path[i][j].pos.col = j;
+            path[i][j].to.row = 0;
+            path[i][j].to.col = 0;
+            path[i][j].cost = INT_MAX;
+            path[i][j].hn = NULL;
+            path[i][j].done = board[i][j]->getCost() == INT_MAX;
+        }
+    }
+
+    heap_t h;
+    heap_init(&h, path_comp, NULL);
+
+    path[pc->row][pc->col].cost = 0;
+    path[pc->row][pc->col].pos.row = pc->row;
+    path[pc->row][pc->col].pos.col = pc->col;
+    path[pc->row][pc->col].hn = heap_insert(&h, &path[pc->row][pc->col]);
 
     while ((p = (path_t *) heap_remove_min(&h))) {
-		p->hn = NULL;
-		c = p->cost + board[p->pos.row][p->pos.col]->getCost();
+        for (i = 0; i < 4; i++) {
+            if (
+                0 <= p->pos.row + dirs[i][0] && p->pos.row + dirs[i][0] < height &&
+                0 <= p->pos.col + dirs[i][1] && p->pos.col + dirs[i][1] < width &&
+                !path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].done
+            ) {
+                if (!path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].hn) {
+                    path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].hn = heap_insert(&h, &path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]]);
+                }
 
-		for (i = 0; i < 4; i++) {
-			if (
-                0 <= p->pos.row + rowVals[i] && p->pos.row + rowVals[i] < height &&
-                0 <= p->pos.col + colVals[i] && p->pos.col + colVals[i] < width &&
-				path[p->pos.row + rowVals[i]][p->pos.col + colVals[i]].hn != NULL &&
-				path[p->pos.row + rowVals[i]][p->pos.col + colVals[i]].cost > c
-				)
-			{
-				path[p->pos.row + rowVals[i]][p->pos.col + colVals[i]].cost = c;
-				heap_decrease_key_no_replace(&h, path[p->pos.row + rowVals[i]][p->pos.col + colVals[i]].hn);
-			}
-		}
-	}
+                if ((c = p->cost + board[p->pos.row][p->pos.col]->getCost()) < path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].cost) {
+                    path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].cost = c;
+                    heap_decrease_key_no_replace(&h, path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].hn);
+                    // path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].to.row = dirs[i][0]; // something goes wrong here
+                    // path[p->pos.row + dirs[i][0]][p->pos.col + dirs[i][1]].to.col = dirs[i][1];
+                }
+            }
+        }
+
+        p->done = true;
+    }
 }
 
 int Map::move(Sprite &c, int dy, int dx)

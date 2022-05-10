@@ -28,3 +28,11 @@ char Grass::getChar()
 {
     return ' ';
 }
+
+Tile::Tile(): Terrain(1)
+{}
+
+char Tile::getChar()
+{
+    return '.';
+}

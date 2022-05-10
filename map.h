@@ -18,13 +18,16 @@ typedef struct point {
 typedef struct path {
 	heap_node_t *hn;
 	point_t pos;
+	point_t to;
 	int cost;
+    bool done;
 } path_t;
 
 class Map {
     private:
         Move *list_tail;
         void generate_path(path_t path[height][width]);
+        void addBuilding(void);
         friend class PC;
     public:
         Terrain *board[height][width];

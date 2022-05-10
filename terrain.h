@@ -25,4 +25,10 @@ class Grass: public Terrain {
         char getChar();
 };
 
+class Tile: public Terrain {
+    public:
+        Tile();
+        char getChar();
+};
+
 #endif
