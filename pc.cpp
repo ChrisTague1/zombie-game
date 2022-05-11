@@ -77,7 +77,7 @@ void PC::shoot(Direction d, Map &map)
 {
     if (!map.validMove(*this, dirs[d][0], dirs[d][1])) return;
 
-    Projectile *proj = Projectile::getProjectile(this, row + dirs[d][0], col + dirs[d][1], d, 1);
+    Projectile *proj = Projectile::getProjectile(this, row + dirs[d][0], col + dirs[d][1], d, 2);
     map.add_to_list(proj);
     increment(1);
     if (map.sprites[proj->row][proj->col]) {

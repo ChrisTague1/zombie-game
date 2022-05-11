@@ -220,8 +220,10 @@ int Map::move(Projectile &c, int dy, int dx)
         c.collide(sprites[c.row + dy][c.col + dx], *this);
         return 1;
     }
-    sprites[c.row][c.col] = NULL;
-    mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
+    if (sprites[c.row][c.col] == &c) {
+        sprites[c.row][c.col] = NULL;
+        mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
+    }
     c.updatePos(dy, dx);
     sprites[c.row][c.col] = &c;
     mvaddch(c.row + 1, c.col + 1, c.getChar());
