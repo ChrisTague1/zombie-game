@@ -23,6 +23,8 @@ Move *Zombie::action(Map &map)
         decrement();
         return next;
     } else if (health <= 0) {
+        map.pc->kill();
+        map.num_zombies--;
         return map.destroy(this);
     }
     
@@ -50,10 +52,4 @@ int Zombie::on_collision(Zombie *zombie, Map &map)
 { return 0; }
 
 int Zombie::on_collision(Projectile *projectile, Map &map)
-{
-    projectile->pc->kill();
-    health--;
-    map.num_zombies--;
-    projectile->health--;
-    return 0;
-}
+{ return projectile->on_collision(this, map); }

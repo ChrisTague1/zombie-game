@@ -39,10 +39,15 @@ int Projectile::on_collision(PC *pc, Map &map)
 
 int Projectile::on_collision(Zombie *zombie, Map &map)
 {
-    pc->kill();
     zombie->health--;
-    map.num_zombies--;
     health--;
+    if (zombie->health > 0 && health > 0) {
+        map.sprites[row][col] = NULL;
+        mvaddch(row + 1, col + 1, map.board[row][col]->getChar());
+        row = zombie->row;
+        col = zombie->col;
+    }
+    increment(speed);
     return 0;
 }
 
