@@ -8,6 +8,7 @@ PC::PC(int r, int c, int health): Sprite('@', r, c, health), kills(0), money(0)
 {
     on = true;
     weapon = Weapon::getWeapon(*this, 1, 25, 2, 1, 2);
+    // speed range damage health fire-rate
 }
 
 PC::~PC()
