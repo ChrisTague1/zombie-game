@@ -23,13 +23,13 @@ Move *Spawner::action(Map &map)
         return next;
     }
 
-    int r, c, i = guarantee + rand() % possible;
+    int tries = 0, r, c, i = guarantee + rand() % possible;
 
     while (i-- > 0) {
         do {
             r = rand() % height;
             c = rand() % width;
-        } while (map.board[r][c]->getCost() == INT_MAX || map.sprites[r][c] || sqrt(pow(map.pc->row - r, 2.0) + pow(map.pc->col - c, 2.0)) < 5.0);
+        } while ((map.board[r][c]->getCost() == INT_MAX || map.sprites[r][c] || sqrt(pow(map.pc->row - r, 2.0) + pow(map.pc->col - c, 2.0)) < 8.0) && tries++ < 20);
 
         map.sprites[r][c] = Zombie::getZombie(r, c, 1);
         map.add_to_list(map.sprites[r][c]);
