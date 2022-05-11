@@ -3,18 +3,21 @@
 #include "map.h"
 #include "ncurses.h"
 
-Zombie::Zombie(int r, int c, int health): Sprite('Z', r, c, health)
-{
-    odds_moving = 15 + rand() % 10;
-    odds_follow = 50 + rand() % 20;
-}
+Zombie::Zombie(
+    int r, 
+    int c, 
+    int health, 
+    int odds_moving, 
+    int odds_following
+    ): Sprite('Z', r, c, health), odds_moving(odds_moving), odds_following(odds_following)
+{}
 
 Zombie::~Zombie()
 {}
 
-Zombie *Zombie::getZombie(int r, int c, int health)
+Zombie *Zombie::getZombie(int r, int c, int health, int odds_moving, int odds_following)
 {
-    return new Zombie(r, c, health);
+    return new Zombie(r, c, health, odds_moving, odds_following);
 }
 
 Move *Zombie::action(Map &map)
@@ -32,7 +35,7 @@ Move *Zombie::action(Map &map)
 
     int n = rand() % 4;
 
-    if (rand() % 100 > odds_follow) {
+    if (rand() % 100 > odds_following) {
         map.validMove(*this, dirs[n][0], dirs[n][1]) &&
         map.move(*this, dirs[n][0], dirs[n][1]);
     } else {
