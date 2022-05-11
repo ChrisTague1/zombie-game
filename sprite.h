@@ -3,6 +3,7 @@
 
 #include "cell.h"
 #include "move.h"
+#include "direction.h"
 
 class PC;
 class Zombie;
@@ -20,20 +21,6 @@ class Sprite: public Cell, public Move {
         virtual int on_collision(Projectile *projectile, Map &map) = 0;
         Sprite(char ch, int r, int c, int health);
         virtual ~Sprite() {}
-};
-
-typedef enum direction {
-    up,
-    down,
-    left,
-    right
-} Direction;
-
-const int dirs[4][2] = {
-    {-1, 0},
-    {1, 0},
-    {0, -1},
-    {0, 1}
 };
 
 #endif

@@ -2,10 +2,12 @@
 #include <ncurses.h>
 #include "map.h"
 #include "projectile.h"
+#include "weapon.h"
 
 PC::PC(int r, int c, int health): Sprite('@', r, c, health), kills(0), money(0)
 {
     on = true;
+    weapon = Weapon::getWeapon(*this, 1, 25, 2, 1, 2);
 }
 
 PC::~PC()
@@ -55,16 +57,16 @@ bool PC::user_input(Map &map)
             move(dirs[right][0], dirs[right][1], map);
             break;
         case 106:
-            shoot(left, map);
+            !weapon->aboveZero() && weapon->shoot(left, map);
             break;
         case 105:
-            shoot(up, map);
+            !weapon->aboveZero() && weapon->shoot(up, map);
             break;
         case 107:
-            shoot(down, map);
+            !weapon->aboveZero() && weapon->shoot(down, map);
             break;
         case 108:
-            shoot(right, map);
+            !weapon->aboveZero() && weapon->shoot(right, map);
             break;
         default:
             break;
@@ -73,21 +75,9 @@ bool PC::user_input(Map &map)
     return true;
 }
 
-void PC::shoot(Direction d, Map &map)
-{
-    if (!map.validMove(*this, dirs[d][0], dirs[d][1])) return;
-
-    Projectile *proj = Projectile::getProjectile(this, row + dirs[d][0], col + dirs[d][1], d, 2);
-    map.add_to_list(proj);
-    increment(1);
-    if (map.sprites[proj->row][proj->col]) {
-        proj->collide(map.sprites[proj->row][proj->col], map);
-    }
-}
-
 void PC::move(int dy, int dx, Map &map)
 {
-    if (map.validMove(*this, dy, dx) && !map.move(*this, dy, dx)) {
+    if (!aboveZero() && map.validMove(*this, dy, dx) && !map.move(*this, dy, dx)) {
         map.generate_path(map.bz_path);
     }
 }
@@ -95,16 +85,21 @@ void PC::move(int dy, int dx, Map &map)
 Move *PC::action(Map &map)
 {
     printStats();
-    kbhit();
 
     if (health <= 0) {
         on = false;
         return next;
     }
 
+    if (weapon->aboveZero()) {
+        weapon->decrement();
+    }
+
     if (aboveZero()) {
         decrement();
-    } else if (kbhit()) {
+    }
+
+    if (kbhit()) {
         on = user_input(map);
     }
 
