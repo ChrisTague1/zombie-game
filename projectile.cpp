@@ -4,15 +4,23 @@
 #include "pc.h"
 #include <cstdlib>
 
-Projectile::Projectile(PC *pc, int r, int c, Direction d, int health): Sprite('+', r, c, health), pc(pc), speed(1), range(15), distance(0), dir(d)
+Projectile::Projectile(
+    int r, 
+    int c, 
+    Direction d, 
+    int health, 
+    int speed, 
+    int range,
+    int damage
+    ):Sprite('+', r, c, health), speed(speed), range(range), distance(0), damage(damage), dir(d)
 {}
 
 Projectile::~Projectile()
 {}
 
-Projectile *Projectile::getProjectile(PC *pc, int r, int c, Direction d, int health)
+Projectile *Projectile::getProjectile(int r, int c, Direction d, int health, int speed, int range, int damage)
 {
-    return new Projectile(pc, r, c, d, health);
+    return new Projectile(r, c, d, health, speed, range, damage);
 }
 
 Move *Projectile::action(Map &m)
@@ -39,7 +47,7 @@ int Projectile::on_collision(PC *pc, Map &map)
 
 int Projectile::on_collision(Zombie *zombie, Map &map)
 {
-    zombie->health--;
+    zombie->health -= damage;
     health--;
     if (zombie->health > 0 && health > 0) {
         map.sprites[row][col] = NULL;

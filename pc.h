@@ -2,6 +2,7 @@
 #define pc_H
 
 #include "sprite.h"
+#include "weapon.h"
 
 class PC: public Sprite {
     private:
@@ -11,6 +12,7 @@ class PC: public Sprite {
         int kills;
         void printStats(void);
         void shoot(Direction d, Map &map);
+        Weapon *weapon;
     public:
         static PC *getPC(int r, int c, int health);
         bool on;
