@@ -2,45 +2,18 @@
 #include "climits"
 
 #define GRASS_COST 5
+#define TILE_COST 3
+#define TREE_COST 7
 
-Terrain::Terrain(int cost)
-{
-    this->cost = cost;
-}
+Terrain::Terrain(int cost, char c): Cell(c), cost(cost) {}
 
 int Terrain::getCost()
-{
-    return cost;
-}
+{ return cost; }
 
-Building::Building(): Terrain(INT_MAX)
-{}
+Building::Building(): Terrain(INT_MAX, '#') {}
 
-char Building::getChar()
-{
-    return '#';
-}
+Grass::Grass(): Terrain(GRASS_COST, ' ') {}
 
-Grass::Grass(): Terrain(GRASS_COST)
-{}
+Tile::Tile(): Terrain(TILE_COST, '.') {}
 
-char Grass::getChar()
-{
-    return ' ';
-}
-
-Tile::Tile(): Terrain(3)
-{}
-
-char Tile::getChar()
-{
-    return '.';
-}
-
-Tree::Tree(): Terrain(7)
-{}
-
-char Tree::getChar()
-{
-    return '^';
-}
+Tree::Tree(): Terrain(TREE_COST, '^') {}

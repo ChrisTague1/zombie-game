@@ -10,31 +10,27 @@ class Terrain: public Cell {
         int getCost();
         virtual ~Terrain() {}
     protected:
-        Terrain(int cost);
+        Terrain(int cost, char c);
 };
 
 class Building: public Terrain {
     public:
         Building();
-        char getChar();
 };
 
 class Grass: public Terrain {
     public:
         Grass();
-        char getChar();
 };
 
 class Tile: public Terrain {
     public:
         Tile();
-        char getChar();
 };
 
 class Tree: public Terrain {
     public:
         Tree();
-        char getChar();
 };
 
 #endif
