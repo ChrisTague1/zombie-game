@@ -69,6 +69,9 @@ bool PC::user_input(Map &map)
         case 108:
             !weapon->aboveZero() && weapon->shoot(right, map);
             break;
+        case 101:
+            while(getch() != 101);
+            break;
         default:
             break;
     }

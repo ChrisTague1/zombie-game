@@ -52,4 +52,6 @@ class Map {
         ~Map();
 };
 
+void print_board(Map &map);
+
 #endif

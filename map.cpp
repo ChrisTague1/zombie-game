@@ -10,6 +10,36 @@
 #include <cstdio>
 #include "spawner.h"
 
+void print_board(Map &map)
+{
+    int i, j;
+
+    for (i = 0; i < height; i++) {
+        for (j = 0; j < width; j++) {
+            if (map.sprites[i][j]) {
+                mvaddch(i + 1, j + 1, map.sprites[i][j]->getChar());
+            } else if (map.board[i][j]) {
+                mvaddch(i + 1, j + 1, map.board[i][j]->getChar());
+            }
+        }
+    }
+
+    for (i = 0; i < width + 1; i++) {
+        mvaddch(0, i, '-');
+        mvaddch(height + 1, i, '-');
+    }
+
+    for (i = 0; i < height + 1; i++) {
+        mvaddch(i, 0, '|');
+        mvaddch(i, width + 1, '|');
+    }
+
+    mvaddch(0, 0, '+');
+    mvaddch(0, width + 1, '+');
+    mvaddch(height + 1, 0, '+');
+    mvaddch(height + 1, width + 1, '+');
+}
+
 Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(0), zombies_in_round(zombies)
 {
     int i, j;
