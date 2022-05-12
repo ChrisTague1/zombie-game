@@ -42,6 +42,9 @@ int main(int argc, char *argv[])
         mvprintw(0, 0, "Round: %d | Zombies: %d | Zombies in round: %d", map.round, map.num_zombies, map.zombies_in_round);
     }
 
+    mvprintw(height + 1, width / 2 - 5, "Game over.");
+    while(getch() != 113);
+
     endwin();
     return 0;
 }
