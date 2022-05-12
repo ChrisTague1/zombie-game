@@ -2,7 +2,7 @@
 #define size_H
 
 #define height 24
-#define width 80
+#define width 100
 
 /**
  * height 45
