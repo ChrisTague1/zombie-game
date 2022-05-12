@@ -10,11 +10,8 @@
 #include <cstdio>
 #include "spawner.h"
 
-Map::Map(): num_zombies(0)
+Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(0), zombies_in_round(zombies)
 {
-    list = NULL;
-    list_tail = NULL;
-
     int i, j;
 
     for (i = 0; i < height; i++) {
@@ -33,8 +30,6 @@ Map::Map(): num_zombies(0)
         addBuilding(i + 1);
     }
 
-
-
     do {
         i = rand() % height;
         j = rand() % width;
@@ -44,8 +39,18 @@ Map::Map(): num_zombies(0)
     sprites[pc->row][pc->col] = pc;
     add_to_list(pc);
 
+    do {
+        i = rand() % height;
+        j = rand() % width;
+    } while(board[i][j]->getCost() == INT_MAX || sprites[i][i]);
+
+    sprites[i][j] = Zombie::getZombie(i, j, 1, 15 + rand() % 10, 50 + rand() % 20);
+    add_to_list(sprites[i][j]);
+    num_zombies++;
+
     generate_path(bz_path);
-    add_to_list(new Spawner(100, 1, 3));
+    spawner = new Spawner(zombies_in_round - 1);
+    add_to_list(spawner);
 }
 
 void Map::addBuilding(int wall)
@@ -252,4 +257,16 @@ Move *Map::destroy(Sprite *s)
         remove_from_list(s);
         delete s;
         return returning;
+}
+
+void Map::nextRound(void)
+{
+    round++;
+    zombies_in_round = 4 * zombies_in_round / 3;
+    spawner->spawn(round, zombies_in_round);
+}
+
+bool Map::shouldContinue(void)
+{
+    return num_zombies < 2 && spawner->toSpawn == 0;
 }

@@ -6,8 +6,9 @@
 #include <cstdio>
 #include <climits>
 
-#define frame_rate 31250
-// 31250
+#define frame_rate 31250 // 31250
+#define R1_ZOMBIES 7
+
 
 void print_board(Map &map)
 {
@@ -51,13 +52,16 @@ int main(int argc, char *argv[])
     int seed;
     seed = time(NULL);
     srand(seed);
-    Map map;
+    Map map = Map(R1_ZOMBIES);
     print_board(map);
     // mvprintw(0, 0, "%d", seed);
 
     Move *current = NULL;
 
     while (map.pc->on) {
+        if (map.shouldContinue()) {
+            map.nextRound();
+        }
         current = map.list;
 
         while (current) {
@@ -65,6 +69,8 @@ int main(int argc, char *argv[])
         }
         
         usleep(frame_rate);
+        mvprintw(0, 0, "+--------------------------------------------------");
+        mvprintw(0, 0, "Round: %d | Zombies: %d | Zombies in round: %d", map.round, map.num_zombies, map.zombies_in_round);
     }
 
     endwin();

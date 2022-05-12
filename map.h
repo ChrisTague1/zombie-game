@@ -9,6 +9,7 @@
 #include "move.h"
 #include "projectile.h"
 #include "heap.h"
+#include "spawner.h"
 
 typedef struct point {
 	int row;
@@ -29,6 +30,7 @@ class Map {
         void generate_path(path_t path[height][width]);
         void addBuilding(int wall);
         friend class PC;
+        Spawner *spawner;
     public:
         Terrain *board[height][width];
         Sprite *sprites[height][width];
@@ -42,7 +44,11 @@ class Map {
         Move *destroy(Sprite *s);
         path_t bz_path[height][width];
         unsigned int num_zombies;
-        Map();
+        void nextRound(void);
+        bool shouldContinue(void);
+        int round;
+        int zombies_in_round;
+        Map(int zombies);
         ~Map();
 };
 
