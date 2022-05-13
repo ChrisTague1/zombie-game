@@ -7,7 +7,7 @@
 
 #define min(x, y) x < y ? x : y
 
-Spawner::Spawner(int zombies): round(1), toSpawn(zombies) {
+Spawner::Spawner(unsigned int zombies, int round): round(round), toSpawn(zombies) {
     increment(10);
 }
 
@@ -31,10 +31,11 @@ Move *Spawner::action(Map &map)
         return next;
     }
 
-    int r, c, i, delay;
+    unsigned int i;
+    int r, c, delay;
     double dist;
 
-    i = min(5 + round, toSpawn);
+    i = min((unsigned int) 5 + round, toSpawn);
     toSpawn -= i;
     delay = 50 + (5 * i);
 

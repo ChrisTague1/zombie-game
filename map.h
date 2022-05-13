@@ -47,7 +47,7 @@ class Map {
         void nextRound(void);
         bool shouldContinue(void);
         int round;
-        int zombies_in_round;
+        unsigned int zombies_in_round;
         Map(int zombies);
         ~Map();
 };

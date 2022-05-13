@@ -6,12 +6,12 @@
 class Spawner: public Move {
     public:
         Move *action(Map &m);
-        Spawner(int zombies);
+        Spawner(unsigned int zombies, int round);
         ~Spawner();
         void spawn(int round, int toSpawn);
     private:
         int round;
-        int toSpawn;
+        unsigned int toSpawn;
         friend class Map;
 };
 

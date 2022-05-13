@@ -40,9 +40,13 @@ void print_board(Map &map)
     mvaddch(height + 1, width + 1, '+');
 }
 
-Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(0), zombies_in_round(zombies)
+Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(1), zombies_in_round(zombies)
 {
     int i, j;
+
+    for (i = 1; i < round; i++) {
+        zombies_in_round = 4 * zombies_in_round / 3;
+    }
 
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
@@ -79,7 +83,7 @@ Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(0), zo
     num_zombies++;
 
     generate_path(bz_path);
-    spawner = new Spawner(zombies_in_round - 1);
+    spawner = new Spawner(zombies_in_round - 1, round);
     add_to_list(spawner);
 }
 

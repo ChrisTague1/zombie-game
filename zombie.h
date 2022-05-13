@@ -6,8 +6,8 @@
 class Zombie: public Sprite {
     private:
         Zombie(int r, int c, int health, int odds_moving, int odds_following);
-        char odds_moving;
-        char odds_following;
+        int odds_moving;
+        int odds_following;
     public:
         static Zombie *getZombie(int r, int c, int health, int odds_moving, int odds_following);
         ~Zombie();
