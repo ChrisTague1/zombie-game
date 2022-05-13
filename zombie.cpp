@@ -1,7 +1,7 @@
 #include "zombie.h"
 #include <cstdlib>
 #include "map.h"
-#include "ncurses.h"
+#include <ncurses.h>
 
 Zombie::Zombie(
     int r, 
@@ -56,3 +56,10 @@ int Zombie::on_collision(Zombie *zombie, Map &map)
 
 int Zombie::on_collision(Projectile *projectile, Map &map)
 { return projectile->on_collision(this, map); }
+
+void Zombie::print(int row, int col)
+{
+    attron(COLOR_PAIR(2));
+    mvaddch(row + 1, col + 1, c);
+    attroff(COLOR_PAIR(2));
+}

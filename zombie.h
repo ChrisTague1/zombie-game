@@ -16,6 +16,7 @@ class Zombie: public Sprite {
         int on_collision(PC *pc, Map &map);
         int on_collision(Zombie *zombie, Map &map);
         int on_collision(Projectile *projectile, Map &map);
+        void print(int row, int col);
 };
 
 #endif

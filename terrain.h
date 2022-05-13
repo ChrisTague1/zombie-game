@@ -2,6 +2,7 @@
 #define terrain_H
 
 #include "cell.h"
+#include <ncurses.h>
 
 class Terrain: public Cell {
     private:
@@ -9,6 +10,11 @@ class Terrain: public Cell {
     public:
         int getCost();
         virtual ~Terrain() {}
+        virtual void print(int row, int col) {
+            attron(COLOR_PAIR(4));
+            mvaddch(row + 1, col + 1, c);
+            attroff(COLOR_PAIR(4));
+        }
     protected:
         Terrain(int cost, char c);
 };
@@ -21,6 +27,11 @@ class Building: public Terrain {
 class Grass: public Terrain {
     public:
         Grass();
+        void print(int row, int col) {
+            attron(COLOR_PAIR(5));
+            mvaddch(row + 1, col + 1, c);
+            attroff(COLOR_PAIR(5));
+        }
 };
 
 class Tile: public Terrain {

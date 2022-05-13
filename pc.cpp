@@ -137,3 +137,10 @@ int PC::on_collision(Zombie *zombie, Map &map)
 
 int PC::on_collision(Projectile *projectile, Map &map)
 { return 0; }
+
+void PC::print(int row, int col)
+{
+    attron(COLOR_PAIR(1));
+    mvaddch(row + 1, col + 1, c);
+    attroff(COLOR_PAIR(1));
+}

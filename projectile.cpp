@@ -51,7 +51,8 @@ int Projectile::on_collision(Zombie *zombie, Map &map)
     health--;
     if (zombie->health > 0 && health > 0) {
         map.sprites[row][col] = NULL;
-        mvaddch(row + 1, col + 1, map.board[row][col]->getChar());
+        // mvaddch(row + 1, col + 1, map.board[row][col]->getChar());
+        map.board[row][col]->print(row, col);
         row = zombie->row;
         col = zombie->col;
     }
@@ -61,3 +62,10 @@ int Projectile::on_collision(Zombie *zombie, Map &map)
 
 int Projectile::on_collision(Projectile *projectile, Map &map)
 { return 0; }
+
+void Projectile::print(int row, int col)
+{
+    attron(COLOR_PAIR(3));
+    mvaddch(row + 1, col + 1, c);
+    attroff(COLOR_PAIR(3));
+}
