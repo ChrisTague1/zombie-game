@@ -17,9 +17,9 @@ void print_board(Map &map)
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
             if (map.sprites[i][j]) {
-                mvaddch(i + 1, j + 1, map.sprites[i][j]->getChar());
+                map.sprites[i][j]->print(i, j);
             } else if (map.board[i][j]) {
-                mvaddch(i + 1, j + 1, map.board[i][j]->getChar());
+                map.board[i][j]->print(i, j);
             }
         }
     }
@@ -244,10 +244,12 @@ int Map::move(Sprite &c, int dy, int dx)
         return 1;
     }
     sprites[c.row][c.col] = NULL;
-    mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
+    // mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
+    board[c.row][c.col]->print(c.row, c.col);
     c.updatePos(dy, dx);
     sprites[c.row][c.col] = &c;
-    mvaddch(c.row + 1, c.col + 1, c.getChar());
+    // mvaddch(c.row + 1, c.col + 1, c.getChar());
+    c.print(c.row, c.col);
     c.increment(board[c.row][c.col]->getCost());
 
     return 0;
@@ -261,11 +263,12 @@ int Map::move(Projectile &c, int dy, int dx)
     }
     if (sprites[c.row][c.col] == &c) {
         sprites[c.row][c.col] = NULL;
-        mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
+        // mvaddch(c.row + 1, c.col + 1, board[c.row][c.col]->getChar());
+        board[c.row][c.col]->print(c.row, c.col);
     }
     c.updatePos(dy, dx);
     sprites[c.row][c.col] = &c;
-    mvaddch(c.row + 1, c.col + 1, c.getChar());
+    c.print(c.row, c.col);
     c.increment(c.getSpeed());
     c.upDistance();
 
@@ -287,7 +290,7 @@ Move *Map::destroy(Sprite *s)
 {
         Move *returning = s->next;
         sprites[s->row][s->col] = NULL;
-        mvaddch(s->row + 1, s->col + 1, board[s->row][s->col]->getChar());
+        board[s->row][s->col]->print(s->row, s->col);
         remove_from_list(s);
         delete s;
         return returning;
