@@ -28,7 +28,7 @@ class Map {
     private:
         Move *list_tail;
         void generate_path(path_t path[height][width]);
-        void addBuilding(int wall);
+        void addBuilding();
         friend class PC;
         Spawner *spawner;
     public:

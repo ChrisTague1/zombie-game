@@ -61,7 +61,7 @@ Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(1), zo
 
     i = 4 + rand() % (height / 8);
     for (j = 0; j < i; j++) {
-        addBuilding(i + 1);
+        addBuilding();
     }
 
     do {
@@ -87,7 +87,7 @@ Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(1), zo
     add_to_list(spawner);
 }
 
-void Map::addBuilding(int wall)
+void Map::addBuilding()
 {
     int r, c, y, x, i, j, s;
 
@@ -110,25 +110,25 @@ void Map::addBuilding(int wall)
         }
     }
 
-    if (rand() % wall) {
+    if (!(rand() % 3)) {
         s = 1 + rand() % (r - 2);
         delete board[y + s][x + c - 1];
         board[y + s][x + c - 1] = new Tile();
     }
 
-    if (rand() % wall) {
+    if (!(rand() % 3)) {
         s = rand() % (r - 2);
         delete board[y + s][x];
         board[y + s][x] = new Tile();
     }
 
-    if (rand() % wall) {
+    if (!(rand() % 3)) {
         s = rand() % (c - 2);
         delete board[y][x + s];
         board[y][x + s] = new Tile();
     }
 
-    if (rand() % wall) {
+    if (!(rand() % 3)) {
         s = rand() % (c - 2);
         delete board[y + r - 1][x + s];
         board[y + r - 1][x + s] = new Tile();
