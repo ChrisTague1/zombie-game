@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     Move *current = NULL;
 
     while (map.pc->on) {
-        if (map.shouldContinue()) {
+        if (map.shouldGoToNextRound()) {
             map.nextRound();
         }
         current = map.list;

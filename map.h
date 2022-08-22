@@ -45,7 +45,7 @@ class Map {
         path_t bz_path[height][width];
         unsigned int num_zombies;
         void nextRound(void);
-        bool shouldContinue(void);
+        bool shouldGoToNextRound(void);
         int round;
         unsigned int zombies_in_round;
         Map(int zombies);

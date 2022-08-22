@@ -303,7 +303,7 @@ void Map::nextRound(void)
     spawner->spawn(round, zombies_in_round);
 }
 
-bool Map::shouldContinue(void)
+bool Map::shouldGoToNextRound(void)
 {
-    return num_zombies < 2 && spawner->toSpawn == 0;
+    return num_zombies == 0 && spawner->toSpawn == 0;
 }
