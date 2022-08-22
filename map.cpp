@@ -9,6 +9,7 @@
 #include "size.h"
 #include <cstdio>
 #include "spawner.h"
+#include "shop.h"
 
 void print_board(Map &map)
 {
@@ -46,7 +47,7 @@ void print_board(Map &map)
 
 Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(1), zombies_in_round(zombies)
 {
-    int i, j;
+    int i, j, k;
 
     for (i = 1; i < round; i++) {
         zombies_in_round = 4 * zombies_in_round / 3;
@@ -89,6 +90,16 @@ Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(1), zo
     generate_path(bz_path);
     spawner = new Spawner(zombies_in_round - 1, round);
     add_to_list(spawner);
+
+    for (k = 1 + rand() % 3; k > 0; k--) {
+        do {
+            i = rand() % height;
+            j = rand() % width;
+        } while(board[i][j]->getCost() == INT_MAX || sprites[i][i]);
+
+        delete board[i][j];
+        board[i][j] = new Shop();
+    }
 }
 
 void Map::addBuilding()

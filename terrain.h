@@ -3,6 +3,7 @@
 
 #include "cell.h"
 #include <ncurses.h>
+#include "pc.h"
 
 class Terrain: public Cell {
     private:
@@ -15,6 +16,7 @@ class Terrain: public Cell {
             mvaddch(row + 1, col + 1, c);
             attroff(COLOR_PAIR(4));
         }
+        virtual void interact(PC &pc) {}
     protected:
         Terrain(int cost, char c);
 };
