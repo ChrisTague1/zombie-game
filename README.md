@@ -1,7 +1,7 @@
 # Zombie
 ## Development
 ### Memory Saftey
-Make sure all changes are memory safe before pushing. Use the command `valgrind --log-file=".valgrind.txt" --leak-check=full ./zombie` and look inside the created `output` file, make sure there are not memory leaks.  
+Make sure all changes are memory safe before pushing. Use the command `valgrind --log-file=".valgrind.txt" --leak-check=full ./zombie` and look inside the created `.valgrind.txt` file, make sure there are not memory leaks.  
 ### Debugging with curses
 To use GDB, you will need two terminals.
 - In terminal one, run the program normal with ./PROGRAM
