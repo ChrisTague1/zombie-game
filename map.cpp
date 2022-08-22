@@ -24,6 +24,8 @@ void print_board(Map &map)
         }
     }
 
+    attron(COLOR_PAIR(4));
+
     for (i = 0; i < width + 1; i++) {
         mvaddch(0, i, '-');
         mvaddch(height + 1, i, '-');
@@ -38,6 +40,8 @@ void print_board(Map &map)
     mvaddch(0, width + 1, '+');
     mvaddch(height + 1, 0, '+');
     mvaddch(height + 1, width + 1, '+');
+
+    attroff(COLOR_PAIR(4));
 }
 
 Map::Map(int zombies): list_tail(NULL), list(NULL), num_zombies(0), round(1), zombies_in_round(zombies)

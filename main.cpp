@@ -44,8 +44,10 @@ int main(int argc, char *argv[])
         }
         
         usleep(frame_rate);
+        attron(COLOR_PAIR(4));
         mvprintw(0, 0, "+--------------------------------------------------");
         mvprintw(0, 0, "Round: %d | Zombies: %d | Zombies in round: %d", map.round, map.num_zombies, map.zombies_in_round);
+        attroff(COLOR_PAIR(4));
     }
 
     if (map.pc->health <= 0) {
