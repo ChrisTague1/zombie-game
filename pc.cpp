@@ -72,6 +72,9 @@ bool PC::user_input(Map &map)
         case 101:
             while(getch() != 101);
             break;
+        case 102: // f
+            map.board[row][col]->interact(*this);
+            break;
         default:
             break;
     }
