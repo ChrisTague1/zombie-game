@@ -110,25 +110,25 @@ void Map::addBuilding()
         }
     }
 
-    if (!(rand() % 3)) {
+    if (rand() % 3) {
         s = 1 + rand() % (r - 2);
         delete board[y + s][x + c - 1];
         board[y + s][x + c - 1] = new Tile();
     }
 
-    if (!(rand() % 3)) {
+    if (rand() % 3) {
         s = rand() % (r - 2);
         delete board[y + s][x];
         board[y + s][x] = new Tile();
     }
 
-    if (!(rand() % 3)) {
+    if (rand() % 3) {
         s = rand() % (c - 2);
         delete board[y][x + s];
         board[y][x + s] = new Tile();
     }
 
-    if (!(rand() % 3)) {
+    if (rand() % 3) {
         s = rand() % (c - 2);
         delete board[y + r - 1][x + s];
         board[y + r - 1][x + s] = new Tile();

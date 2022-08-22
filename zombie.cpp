@@ -33,9 +33,9 @@ Move *Zombie::action(Map &map)
     
     if (rand() % 100 > odds_moving) return next;
 
-    int n = rand() % 4;
-
     if (rand() % 100 > odds_following) {
+        int n = rand() % 4;
+
         map.validMove(*this, dirs[n][0], dirs[n][1]) &&
         map.move(*this, dirs[n][0], dirs[n][1]);
     } else {

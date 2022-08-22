@@ -11,6 +11,9 @@
 
 int main(int argc, char *argv[])
 {
+    int seed;
+    seed = time(NULL);
+    printf("%d\n", seed);
     initscr();
     raw();
     noecho();
@@ -24,12 +27,9 @@ int main(int argc, char *argv[])
     init_pair(3, COLOR_CYAN, COLOR_BLACK);
     init_pair(4, COLOR_WHITE, COLOR_BLACK);
     init_pair(5, COLOR_BLACK, COLOR_BLACK);
-    int seed;
-    seed = time(NULL);
     srand(seed);
     Map map = Map(R1_ZOMBIES);
     print_board(map);
-    // mvprintw(0, 0, "%d", seed);
 
     Move *current = NULL;
 
@@ -54,5 +54,6 @@ int main(int argc, char *argv[])
     }
 
     endwin();
+    printf("%d\n", seed);
     return 0;
 }
