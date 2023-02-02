@@ -8,13 +8,14 @@ Weapon::Weapon(
     int range,
     int damage,
     int health,
-    int fireRate
-    ): pc(pc), speed(speed), range(range), damage(damage), health(health), fireRate(fireRate)
+    int fireRate,
+    int ammo
+    ): pc(pc), speed(speed), range(range), damage(damage), health(health), fireRate(fireRate), ammo(ammo)
 {}
 
-Weapon *Weapon::getWeapon(PC &pc, int speed, int range, int damage, int health, int fireRate)
+Weapon *Weapon::getWeapon(PC &pc, int speed, int range, int damage, int health, int fireRate, int ammo)
 {
-    return new Weapon(pc, speed, range, damage, health, fireRate);
+    return new Weapon(pc, speed, range, damage, health, fireRate, ammo);
 }
 
 Move *Weapon::action(Map &map)
@@ -22,7 +23,14 @@ Move *Weapon::action(Map &map)
 
 int Weapon::shoot(Direction d, Map &map)
 {
-    if (!map.validMove(pc, dirs[d][0], dirs[d][1])) return -1;
+    if (
+            !map.validMove(pc, dirs[d][0], dirs[d][1]) ||
+            ammo == 0
+        ) {
+        return -1;
+    }
+
+    ammo--;
 
     Projectile *proj = Projectile::getProjectile(pc.row + dirs[d][0], pc.col + dirs[d][1], d, health, speed, range, damage);
     map.add_to_list(proj);
@@ -33,3 +41,12 @@ int Weapon::shoot(Direction d, Map &map)
 
     return 0;
 }
+
+int Weapon::getAmmo() {
+    return ammo;
+}
+
+void Weapon::refillAmmo(int ammo) {
+    this->ammo += ammo;
+}
+

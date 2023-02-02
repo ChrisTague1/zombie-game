@@ -27,6 +27,7 @@ class PC: public Sprite {
         int on_collision(Zombie *zombie, Map &map);
         int on_collision(Projectile *projectile, Map &map);
         void print(int row, int col);
+        void refillAmmo(int ammo);
 };
 
 #endif

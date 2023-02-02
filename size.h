@@ -1,8 +1,8 @@
 #ifndef size_H
 #define size_H
 
-#define height 24
-#define width 80
+const int height = 48;
+const int width = 80;
 
 /**
  * height 45

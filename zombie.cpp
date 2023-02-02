@@ -31,8 +31,10 @@ Move *Zombie::action(Map &map)
         return map.destroy(this);
     }
     
+    // should be odds_moving
     if (rand() % 100 > odds_moving) return next;
 
+    // should be odds_folliwing
     if (rand() % 100 > odds_following) {
         int n = rand() % 4;
 

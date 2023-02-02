@@ -7,8 +7,8 @@
 PC::PC(int r, int c, int health): Sprite('@', r, c, health), kills(0), money(0)
 {
     on = true;
-    weapon = Weapon::getWeapon(*this, 1, 25, 2, 1, 2);
-    // speed range damage health fire-rate
+    weapon = Weapon::getWeapon(*this, 1, 25, 2, 1, 2, 100);
+    // speed range damage health fire-rate ammo
 }
 
 PC::~PC()
@@ -121,8 +121,12 @@ int PC::kill(void)
 
 void PC::printStats(void)
 {
-    mvprintw(height + 2, 0, "                                    ");
-    mvprintw(height + 2, 0, "Kills: %d | Health: %d | Money %d", kills, health, money);
+    mvprintw(height + 2, 0, "                                                 ");
+    mvprintw(height + 2, 0, "Kills: %d | Health: %d | Money %d | Ammo %d", kills, health, money, weapon->getAmmo());
+}
+
+void PC::refillAmmo(int ammo) {
+    weapon->refillAmmo(ammo);
 }
 
 int PC::collide(Sprite *s, Map &map)

@@ -5,15 +5,26 @@
 #include "map.h"
 #include <cstdio>
 #include <climits>
+#include <iostream>
+#include <fstream>
 
 #define frame_rate 31250 // 31250
 #define R1_ZOMBIES 7
 
 int main(int argc, char *argv[])
 {
-    int seed;
-    seed = time(NULL);
-    printf("%d\n", seed);
+	int seed;
+	if (argc > 1) {
+		seed = atoi(argv[1]);
+	} else {
+		seed = time(NULL);
+	}
+
+	std::ofstream file;
+	file.open(".seed.log");
+	file << seed << std::endl;
+	file.close();
+
     initscr();
     raw();
     noecho();
@@ -56,6 +67,5 @@ int main(int argc, char *argv[])
     }
 
     endwin();
-    printf("%d\n", seed);
     return 0;
 }

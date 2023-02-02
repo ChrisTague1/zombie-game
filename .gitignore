@@ -3,3 +3,4 @@
 zombie
 .valgrind.txt
 .vscode
+*.log
